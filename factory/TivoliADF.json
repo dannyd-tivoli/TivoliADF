@@ -1,0 +1,9 @@
+{
+	"name": "TivoliADF",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "aa06f384-5e0b-400b-b2cd-0b8cce9af070",
+		"tenantId": "fc9e31ae-5461-4be6-8f85-185364ad9a7e"
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"name": "cds_workstages",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "workstages.csv",
+				"container": "tivoli-cds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Workstage",
+				"type": "String"
+			},
+			{
+				"name": "WorkstageDescription",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,51 @@
+{
+	"name": "posystem_regional_directors",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "RegionalDirectorCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RegionalDirectorEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RegionalDirectorName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RegionalDirectorPOLimit",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 6
+			},
+			{
+				"name": "RegionalDirectorQuoteLimit",
+				"type": "decimal",
+				"precision": 28,
+				"scale": 6
+			},
+			{
+				"name": "RDCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RegionalDirectorRegion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "POSystem",
+			"table": "RegionalDirectors"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

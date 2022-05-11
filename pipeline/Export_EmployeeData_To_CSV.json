@@ -1,0 +1,74 @@
+{
+	"name": "Export_EmployeeData_To_CSV",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[USP_TOPSDatabase_Employee]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_Applications",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_Blob_TivoliTOPSDatabase",
+						"type": "DatasetReference",
+						"parameters": {
+							"Filename": "Employees.csv"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"QueryItem": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "TOPS Database"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-14T15:05:48Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

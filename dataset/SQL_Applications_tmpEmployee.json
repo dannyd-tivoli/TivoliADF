@@ -1,0 +1,156 @@
+{
+	"name": "SQL_Applications_tmpEmployee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PayrollID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TopsID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Forename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Surname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "KnownAs",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JobTitle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StartDate",
+				"type": "date"
+			},
+			{
+				"name": "LeaveDate",
+				"type": "date"
+			},
+			{
+				"name": "Leave",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WorkType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Base",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContractType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TeamLeaderID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SupervisorID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ManagerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AM_Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AOMAccount",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Operations",
+				"type": "nvarchar"
+			},
+			{
+				"name": "gdnUsrID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DateAdded",
+				"type": "date"
+			},
+			{
+				"name": "LastUpdatedDate",
+				"type": "date"
+			},
+			{
+				"name": "DateDeleted",
+				"type": "date"
+			},
+			{
+				"name": "IsManager",
+				"type": "bit"
+			},
+			{
+				"name": "IsSupervisor",
+				"type": "bit"
+			},
+			{
+				"name": "IsTeamLeader",
+				"type": "bit"
+			},
+			{
+				"name": "QuoteApprovalLimit",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tmpEmployee"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,49 @@
+{
+	"name": "cds_project_codes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "project_codes.csv",
+				"container": "tivoli-cds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ProjectCode",
+				"type": "String"
+			},
+			{
+				"name": "ProjectName",
+				"type": "String"
+			},
+			{
+				"name": "ClientCode",
+				"type": "String"
+			},
+			{
+				"name": "ClientName",
+				"type": "String"
+			},
+			{
+				"name": "ManagerCode",
+				"type": "String"
+			},
+			{
+				"name": "ManagerName",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

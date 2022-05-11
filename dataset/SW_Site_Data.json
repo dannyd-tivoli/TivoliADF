@@ -1,0 +1,251 @@
+{
+	"name": "SW_Site_Data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Site Data",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SW Data Tables 2022.xlsx",
+				"container": "tivoli-excel"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Site_ref",
+				"type": "String"
+			},
+			{
+				"name": "site",
+				"type": "String"
+			},
+			{
+				"name": "team",
+				"type": "String"
+			},
+			{
+				"name": "week",
+				"type": "String"
+			},
+			{
+				"name": "pcode",
+				"type": "String"
+			},
+			{
+				"name": "map",
+				"type": "String"
+			},
+			{
+				"name": "location",
+				"type": "String"
+			},
+			{
+				"name": "town",
+				"type": "String"
+			},
+			{
+				"name": "address",
+				"type": "String"
+			},
+			{
+				"name": "postcode",
+				"type": "String"
+			},
+			{
+				"name": "site_address",
+				"type": "String"
+			},
+			{
+				"name": "grid",
+				"type": "String"
+			},
+			{
+				"name": "latitude",
+				"type": "String"
+			},
+			{
+				"name": "longitude",
+				"type": "String"
+			},
+			{
+				"name": "dept_id",
+				"type": "String"
+			},
+			{
+				"name": "dept_desc",
+				"type": "String"
+			},
+			{
+				"name": "Dep level 3",
+				"type": "String"
+			},
+			{
+				"name": "Dep level 2",
+				"type": "String"
+			},
+			{
+				"name": "Dep level 1",
+				"type": "String"
+			},
+			{
+				"name": "SW_Manager",
+				"type": "String"
+			},
+			{
+				"name": "Contact",
+				"type": "String"
+			},
+			{
+				"name": "SW_Site_Contact",
+				"type": "String"
+			},
+			{
+				"name": "Site_Phone",
+				"type": "String"
+			},
+			{
+				"name": "function",
+				"type": "String"
+			},
+			{
+				"name": "grass_m",
+				"type": "String"
+			},
+			{
+				"name": "gras_freq",
+				"type": "String"
+			},
+			{
+				"name": "rough_m",
+				"type": "String"
+			},
+			{
+				"name": "rough_freq",
+				"type": "String"
+			},
+			{
+				"name": "shrub_m",
+				"type": "String"
+			},
+			{
+				"name": "shrub_freq",
+				"type": "String"
+			},
+			{
+				"name": "hedge_m",
+				"type": "String"
+			},
+			{
+				"name": "hedge_freq",
+				"type": "String"
+			},
+			{
+				"name": "hard_m",
+				"type": "String"
+			},
+			{
+				"name": "hard_freq",
+				"type": "String"
+			},
+			{
+				"name": "LitterLeaf_Freq",
+				"type": "String"
+			},
+			{
+				"name": "LitterLeaf_m",
+				"type": "String"
+			},
+			{
+				"name": "invasive_m",
+				"type": "String"
+			},
+			{
+				"name": "invasive_freq",
+				"type": "String"
+			},
+			{
+				"name": "Trees_Freq",
+				"type": "String"
+			},
+			{
+				"name": "Trees_m",
+				"type": "String"
+			},
+			{
+				"name": "Gullies_Freq",
+				"type": "String"
+			},
+			{
+				"name": "Gullies_m",
+				"type": "String"
+			},
+			{
+				"name": "Planters_Freq",
+				"type": "String"
+			},
+			{
+				"name": "Planters_m",
+				"type": "String"
+			},
+			{
+				"name": "SiteVisit_Freq",
+				"type": "String"
+			},
+			{
+				"name": "SiteVisit_m",
+				"type": "String"
+			},
+			{
+				"name": "risk",
+				"type": "String"
+			},
+			{
+				"name": "access",
+				"type": "String"
+			},
+			{
+				"name": "comments",
+				"type": "String"
+			},
+			{
+				"name": "r_manager",
+				"type": "String"
+			},
+			{
+				"name": "a_manager",
+				"type": "String"
+			},
+			{
+				"name": "tops_user",
+				"type": "String"
+			},
+			{
+				"name": "tos_account",
+				"type": "String"
+			},
+			{
+				"name": "DateAdded",
+				"type": "String"
+			},
+			{
+				"name": "DateModified",
+				"type": "String"
+			},
+			{
+				"name": "DateDeleted",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

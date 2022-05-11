@@ -1,0 +1,280 @@
+{
+	"name": "Finance_FactLoad_Budget",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 1
+								},
+								"sink": {
+									"name": "WorkstageCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 2
+								},
+								"sink": {
+									"name": "FileName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 3
+								},
+								"sink": {
+									"name": "ActivityCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 5
+								},
+								"sink": {
+									"name": "PackName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 6
+								},
+								"sink": {
+									"name": "TabName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 8
+								},
+								"sink": {
+									"name": "April",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 9
+								},
+								"sink": {
+									"name": "May",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 10
+								},
+								"sink": {
+									"name": "June",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 11
+								},
+								"sink": {
+									"name": "July",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 12
+								},
+								"sink": {
+									"name": "August",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 13
+								},
+								"sink": {
+									"name": "September",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 14
+								},
+								"sink": {
+									"name": "October",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 15
+								},
+								"sink": {
+									"name": "November",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 16
+								},
+								"sink": {
+									"name": "December",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 17
+								},
+								"sink": {
+									"name": "January",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 18
+								},
+								"sink": {
+									"name": "February",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 19
+								},
+								"sink": {
+									"name": "March",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 20
+								},
+								"sink": {
+									"name": "FinancialYear",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Excel_Reception_Budget",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Reception_FactBudget_Staging",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Data Warehouse Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-11T07:20:14Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,183 @@
+{
+	"name": "OA_FactLoad_GeneralLedger",
+	"properties": {
+		"description": "GL Data from Open Accounts",
+		"activities": [
+			{
+				"name": "LastRunDate",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'oa_nltrans'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "TivoliDW_db",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Load OA Fact GL",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Dim Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "oa_fact_GeneralLedger_df",
+						"type": "DataFlowReference",
+						"parameters": {
+							"LastRunDate": {
+								"value": "'@{variables('_LastRunDateTime')}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Set _LastDateTime",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LastRunDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "_LastRunDateTime",
+					"value": {
+						"value": "@formatDateTime(activity('LastRunDate').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "CurrentDate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "_CurrentDate",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "UpdateLastRunDate",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Load OA Fact GL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CurrentDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[System].[sp_UpdateLastRunDateTime]",
+					"storedProcedureParameters": {
+						"LastRunDate": {
+							"value": {
+								"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"Setting": {
+							"value": "oa_nltrans",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Dim Pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set _LastDateTime",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "OA_DimLoad",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"_LastRunDateTime": {
+				"type": "String"
+			},
+			"_CurrentDate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Data Warehouse Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-11T10:30:46Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

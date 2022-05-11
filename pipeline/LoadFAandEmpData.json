@@ -1,0 +1,392 @@
+{
+	"name": "LoadFAandEmpData",
+	"properties": {
+		"activities": [
+			{
+				"name": "StageEmployees",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearEmployees_Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "payroll",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "payroll",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "tops",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tops",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "forename",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "forename",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "surname",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "surname",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "lowercase",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "lowercase",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "know as",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "KnownAs",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "job",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "job",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "work_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "work_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "base",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "base",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "pcode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pcode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "p_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "p_name",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "c_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "c_type",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "teaml",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "teaml",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "super",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "super",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "manager",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "am_code",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "am_code",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "topsac",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tops_ac",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "operations",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Operations",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "leave",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Leave",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "start",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "StartDate",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "leave_date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LeaveDate",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "employee_data",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Reception_Employyees_Staging",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "sp_ClearEmployees_Staging",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_ClearEmployees_Staging]"
+				},
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Merge Employee Data",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "StageEmployees",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[TIVOLI].[sp_EmployeeDataRefresh]"
+				},
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-04-28T09:27:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

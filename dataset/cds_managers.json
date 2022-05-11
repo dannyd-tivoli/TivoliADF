@@ -1,0 +1,53 @@
+{
+	"name": "cds_managers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "managers.csv",
+				"container": "tivoli-cds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "AreaCode",
+				"type": "String"
+			},
+			{
+				"name": "ManagerEmail",
+				"type": "String"
+			},
+			{
+				"name": "ManagerName",
+				"type": "String"
+			},
+			{
+				"name": "ManagerQuoteLimit",
+				"type": "String"
+			},
+			{
+				"name": "ManagerRegion",
+				"type": "String"
+			},
+			{
+				"name": "RMCode",
+				"type": "String"
+			},
+			{
+				"name": "TOPsID",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

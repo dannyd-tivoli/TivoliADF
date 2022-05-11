@@ -1,0 +1,27 @@
+{
+	"name": "sw_work_elements_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliAPI_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "task_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "task",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "SW_Work_Elements_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

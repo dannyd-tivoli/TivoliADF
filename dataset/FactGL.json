@@ -1,0 +1,148 @@
+{
+	"name": "FactGL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TiviliDW_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "unqkey",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BatchReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DocumentNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LineNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CostCentreID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DocumentTypeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TransactionTypeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ActivityCodeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TransactionDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DocumentDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "InputDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "InputTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SupplierID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "YearNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Period",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SourceReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OriginReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BaseValue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "CurrentValue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "Quantity",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "QuantityUnits",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VatCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastModifiedDateTime",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "DW",
+			"table": "FactGeneralLedger"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

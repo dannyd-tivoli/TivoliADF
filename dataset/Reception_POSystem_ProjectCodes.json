@@ -1,0 +1,42 @@
+{
+	"name": "Reception_POSystem_ProjectCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Reception",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ProjectCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerName",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "POSystem",
+			"table": "ProjectCodes"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

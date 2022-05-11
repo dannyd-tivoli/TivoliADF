@@ -1,0 +1,905 @@
+{
+	"name": "LoadCDSData_Applications",
+	"properties": {
+		"activities": [
+			{
+				"name": "sp_ClearCDSData",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[POSystem].[sp_ClearCDSData]"
+				},
+				"linkedServiceName": {
+					"referenceName": "Applications_db",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "suppliers",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "SupplierEmail",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SupplierEmail",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SupplierName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SupplierName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SupplierPostcode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SupplierPostcode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SupplierCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SupplierCode",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Address1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Address1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Phone",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Phone",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_suppliers",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_suppliers",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "regional_directors",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "RegionalDirectorCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorEmail",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorEmail",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorPOLimit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorPOLimit",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 6,
+									"precision": 28
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorQuoteLimit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorQuoteLimit",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 6,
+									"precision": 28
+								}
+							},
+							{
+								"source": {
+									"name": "RDCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RDCode",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorRegion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorRegion",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_regional_directors",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_regional_directors",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "project_codes",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ProjectCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProjectCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProjectName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ClientCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ClientCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ClientName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ClientName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_project_codes",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_project_codes",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "workstages",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Workstage",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Workstage",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WorkstageDescription",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "WorkstageDescription",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_workstages",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_workstages",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "regional_managers",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "RegionalManagerCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalManagerCode",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalManagerEmail",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalManagerEmail",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalManagerName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalManagerName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorCode",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "RegionalDirectorRegion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RegionalDirectorRegion",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_regional_managers",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_regional_managers",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "managers",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "AreaCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "AreaCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerEmail",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerEmail",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerQuoteLimit",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerQuoteLimit",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerRegion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerRegion",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RMCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RMCode",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "TOPsID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TOPsID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_managers",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_managers",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "activity_codes",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ActivityCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivityName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivityCategory",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityCategory",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivityType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_activity_codes",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "posystem_activity_codes",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-03-02T11:49:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

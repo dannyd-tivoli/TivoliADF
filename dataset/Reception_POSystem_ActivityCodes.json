@@ -1,0 +1,34 @@
+{
+	"name": "Reception_POSystem_ActivityCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Reception",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ActivityCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityCategory",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityType",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "POSystem",
+			"table": "ActivityCodes"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,41 @@
+{
+	"name": "cds_activity_codes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "activity_codes.csv",
+				"container": "tivoli-cds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ActivityCode",
+				"type": "String"
+			},
+			{
+				"name": "ActivityName",
+				"type": "String"
+			},
+			{
+				"name": "ActivityCategory",
+				"type": "String"
+			},
+			{
+				"name": "ActivityType",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

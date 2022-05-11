@@ -1,0 +1,1047 @@
+{
+	"name": "LoadSWData",
+	"properties": {
+		"activities": [
+			{
+				"name": "sw_contract_rates_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_CleanupSW_Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "task",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "task",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "value",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "value",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sw_contract_rates_csv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sw_contract_rates_staging",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "sp_CleanupSW_Staging",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[Tivoli].[sp_CleanUpSW_Staging]"
+				},
+				"linkedServiceName": {
+					"referenceName": "TivoliAPI_db",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Merge Contract Rates",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sw_contract_rates_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[Tivoli].[sp_Get_SW_Contract_Rates]"
+				},
+				"linkedServiceName": {
+					"referenceName": "TivoliAPI_db",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sw_finaance_codes_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_CleanupSW_Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dept_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dept_id",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dept_desc",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dept_desc",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "sw_region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_region",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "sw_team",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_team",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "sw_manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_manager",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site_phone",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site_phone",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sw_finance_codes_csv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sw_finance_codes",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Finance Codes",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sw_finaance_codes_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[Tivoli].[sp_Get_SW_Finance_Codes]"
+				},
+				"linkedServiceName": {
+					"referenceName": "TivoliAPI_db",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sw_site_data_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_CleanupSW_Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "team",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "team",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "week",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "week",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "pcode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pcode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "map",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "map",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "town",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "town",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "address",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "address",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "postcode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "postcode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site_address",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site_address",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "grid",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "grid",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "latitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "latitude",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "longitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "longitude",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dept_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dept_id",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dept_desc",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dept_desc",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "sw_region",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_region",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "sw_team",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_team",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site_contact",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site_contact",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site_phone",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site_phone",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "grass_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "grass_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "gras_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "gras_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "hard_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hard_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "hard_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hard_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "rough_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rough_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "rough_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rough_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "invasive_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "invasive_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "invasive_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "invasive_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "hedge_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hedge_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "hedge_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hedge_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "shrub_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "shrub_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "shrub_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "shrub_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "risk",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "risk",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "access",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "access",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "comments",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "comments",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "r_manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "r_manager",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "a_manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "a_manager",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "tops_user",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tops_user",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "tos_account",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tos_account",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sw_site_data_csv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sw_site_data_stagng",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Site Data",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sw_site_data_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[Tivoli].[sp_Get_SW_Site_Data]"
+				},
+				"linkedServiceName": {
+					"referenceName": "TivoliAPI_db",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sw_work_elements",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_CleanupSW_Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "task_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "task_id",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "task",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "task",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sw_work_elements_csv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sw_work_elements_staging",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Merge Work Elements",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sw_work_elements",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[Tivoli].[sp_Get_SW_Work_Elements]"
+				},
+				"linkedServiceName": {
+					"referenceName": "TivoliAPI_db",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-12-01T11:00:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,74 @@
+{
+	"name": "sw_finance_codes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliAPI_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sw_ref",
+				"type": "nvarchar"
+			},
+			{
+				"name": "site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dept_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dept_desc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sw_region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sw_team",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sw_manager",
+				"type": "nvarchar"
+			},
+			{
+				"name": "site_phone",
+				"type": "nvarchar"
+			},
+			{
+				"name": "function",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DateAdded",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "DateModified",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "DateDeleted",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "SW_Finance_Codes_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

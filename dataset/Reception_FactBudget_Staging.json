@@ -1,0 +1,120 @@
+{
+	"name": "Reception_FactBudget_Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Reception",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WorkstageCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FileName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PackName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TabName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "April",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "May",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "June",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "July",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "August",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "September",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "October",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "November",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "December",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "January",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "February",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "March",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "FinancialYear",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "Finance",
+			"table": "Budget_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

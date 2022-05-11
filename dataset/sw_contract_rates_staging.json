@@ -1,0 +1,34 @@
+{
+	"name": "sw_contract_rates_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliAPI_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sw_ref",
+				"type": "varchar"
+			},
+			{
+				"name": "site",
+				"type": "varchar"
+			},
+			{
+				"name": "task",
+				"type": "varchar"
+			},
+			{
+				"name": "value",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "SW_Contract_Rates_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "WhenFileArrives",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/tivoli-excel/blobs/FixedAssets",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/5697a3d1-2163-4132-b12c-5e365b35ff40/resourceGroups/TivoliData/providers/Microsoft.Storage/storageAccounts/tivoli",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,166 @@
+{
+	"name": "Reception_FixedAssets_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Reception",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "F_Index",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OA_Index",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Original_Owner",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Asset_Tag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Project_Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Responsible",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PRIN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Invoice_No",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Activity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Purchased",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Depn_Life",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Original_Value",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Opening_NBV",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Monthly_Depn",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Current_NBV",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UR_DW",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Category_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Category_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Category_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TOPsCategory",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Expected_weekly_checks",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Condition",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Make",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Model",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Registration",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Fuel_Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "V5_Recorded",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Serial_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Comments",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Havs",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exposure",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Date_last_verified",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Maintenance_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Maintenance_costs",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Upload",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "FixedAssets_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

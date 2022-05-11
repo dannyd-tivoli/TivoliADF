@@ -1,0 +1,74 @@
+{
+	"name": "Excel_TempSpreadsheet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Excel"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet2",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Book1.xlsx",
+				"container": "tivoli-excel"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "MachineType",
+				"type": "String"
+			},
+			{
+				"name": "Make",
+				"type": "String"
+			},
+			{
+				"name": "Model",
+				"type": "String"
+			},
+			{
+				"name": "NoiseLevelDecibels",
+				"type": "String"
+			},
+			{
+				"name": "BookMagnitude",
+				"type": "String"
+			},
+			{
+				"name": "WearAndTearAllowance",
+				"type": "String"
+			},
+			{
+				"name": "ActualVibrationMagnitude",
+				"type": "String"
+			},
+			{
+				"name": "ExposurePointminsperhour",
+				"type": "String"
+			},
+			{
+				"name": "TimeToReachEAV",
+				"type": "String"
+			},
+			{
+				"name": "TimeToReachELV",
+				"type": "String"
+			},
+			{
+				"name": "ExposureDurationTWA",
+				"type": "String"
+			},
+			{
+				"name": "ExposurePointsDailySingleMachine",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

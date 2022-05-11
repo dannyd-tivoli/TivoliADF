@@ -1,0 +1,41 @@
+{
+	"name": "sw_contract_rates_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SW_Contract_Rates_Upload.csv",
+				"container": "tivoli-excel"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "sw_ref",
+				"type": "String"
+			},
+			{
+				"name": "site",
+				"type": "String"
+			},
+			{
+				"name": "task",
+				"type": "String"
+			},
+			{
+				"name": "value",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

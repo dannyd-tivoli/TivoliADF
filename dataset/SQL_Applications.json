@@ -1,0 +1,16 @@
+{
+	"name": "SQL_Applications",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL Databases"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

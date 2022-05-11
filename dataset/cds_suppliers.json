@@ -1,0 +1,41 @@
+{
+	"name": "cds_suppliers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "suppliers.csv",
+				"container": "tivoli-cds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SupplierEmail",
+				"type": "String"
+			},
+			{
+				"name": "SupplierName",
+				"type": "String"
+			},
+			{
+				"name": "SupplierPostcode",
+				"type": "String"
+			},
+			{
+				"name": "SupplierCode",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

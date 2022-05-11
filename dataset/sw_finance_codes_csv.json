@@ -1,0 +1,61 @@
+{
+	"name": "sw_finance_codes_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SW_Finance_Codes_Upload.csv",
+				"container": "tivoli-excel"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "sw_ref",
+				"type": "String"
+			},
+			{
+				"name": "site",
+				"type": "String"
+			},
+			{
+				"name": "dept_id",
+				"type": "String"
+			},
+			{
+				"name": "dept_desc",
+				"type": "String"
+			},
+			{
+				"name": "sw_region",
+				"type": "String"
+			},
+			{
+				"name": "sw_team",
+				"type": "String"
+			},
+			{
+				"name": "sw_manager",
+				"type": "String"
+			},
+			{
+				"name": "site_phone",
+				"type": "String"
+			},
+			{
+				"name": "function",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

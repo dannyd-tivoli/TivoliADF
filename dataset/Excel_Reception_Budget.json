@@ -1,0 +1,25 @@
+{
+	"name": "Excel_Reception_Budget",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Excel"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Budget & FC - Upload - Activity Code.xlsx",
+				"container": "tivoli-excel"
+			},
+			"range": ""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,13 @@
+{
+	"name": "TivoliDW_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TiviliDW_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,98 @@
+{
+	"name": "Reception_OA_ProjectCodesCombined",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Reception",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "project",
+				"type": "varchar"
+			},
+			{
+				"name": "panlcode",
+				"type": "varchar"
+			},
+			{
+				"name": "workstage",
+				"type": "varchar"
+			},
+			{
+				"name": "del",
+				"type": "bit"
+			},
+			{
+				"name": "autoload",
+				"type": "bit"
+			},
+			{
+				"name": "stdate",
+				"type": "date"
+			},
+			{
+				"name": "endate",
+				"type": "date"
+			},
+			{
+				"name": "stat",
+				"type": "varchar"
+			},
+			{
+				"name": "rulecode",
+				"type": "varchar"
+			},
+			{
+				"name": "unqkey",
+				"type": "varchar"
+			},
+			{
+				"name": "xchar2",
+				"type": "varchar"
+			},
+			{
+				"name": "xdate1",
+				"type": "date"
+			},
+			{
+				"name": "xdate2",
+				"type": "date"
+			},
+			{
+				"name": "xlog1",
+				"type": "bit"
+			},
+			{
+				"name": "xlog2",
+				"type": "bit"
+			},
+			{
+				"name": "xchar1",
+				"type": "varchar"
+			},
+			{
+				"name": "billinglimit",
+				"type": "decimal",
+				"precision": 17,
+				"scale": 2
+			},
+			{
+				"name": "UpdatedDateTime",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "OA",
+			"table": "oa_pcvalcmb"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

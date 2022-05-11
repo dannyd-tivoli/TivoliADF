@@ -1,0 +1,65 @@
+{
+	"name": "SQL_Applications_SW_Finance_Codes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sw_ref",
+				"type": "nvarchar"
+			},
+			{
+				"name": "site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "function",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DateAdded",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "DateModified",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "DateDeleted",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Dep Level 3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Dep Level 2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Dep Level 1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "SW",
+			"table": "SW_Finance_Codes"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

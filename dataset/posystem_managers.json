@@ -1,0 +1,48 @@
+{
+	"name": "posystem_managers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "AreaCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerQuoteLimit",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ManagerRegion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RMCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TOPsID",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "POSystem",
+			"table": "Managers"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,66 @@
+{
+	"name": "Excel_SW_FinanceCodes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Excel"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Finance Codes",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Amended SW Data Tables 2022.xlsx",
+				"container": "tivoli-excel"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "sw_ref",
+				"type": "String"
+			},
+			{
+				"name": "site",
+				"type": "String"
+			},
+			{
+				"name": "Dep Level 3",
+				"type": "String"
+			},
+			{
+				"name": "Dep Level 2",
+				"type": "String"
+			},
+			{
+				"name": "Dep Level 1",
+				"type": "String"
+			},
+			{
+				"name": "function",
+				"type": "String"
+			},
+			{
+				"name": "DateAdded",
+				"type": "String"
+			},
+			{
+				"name": "DateModified",
+				"type": "String"
+			},
+			{
+				"name": "DateDeleted",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

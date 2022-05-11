@@ -1,0 +1,188 @@
+{
+	"name": "ProccessAOMData",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetRunningStatus",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT [Status] FROM [RDF].[tbl_PipelineRuns]  WHERE PipelineName = 'ProcessAOMData'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "tbl_PipelineRuns",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Check Run Status",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "GetRunningStatus",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity(\n'GetRunningStatus').output.firstRow.Status, 'Complete'\n)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Wait_false",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "sp_AddTemplateFields",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "StartingPipeline",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[AOM].[sp_AddTemplateFields]"
+							},
+							"linkedServiceName": {
+								"referenceName": "TivoliAPI_db",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "sp_ProcessValues",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "sp_AddTemplateFields",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[AOM].[sp_ProcessValues]"
+							},
+							"linkedServiceName": {
+								"referenceName": "TivoliAPI_db",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "StartingPipeline",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[RDF].[sp_PipelineStatus]",
+								"storedProcedureParameters": {
+									"PipelineName": {
+										"value": "ProcessAOMData",
+										"type": "String"
+									},
+									"Status": {
+										"value": "Running",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "TivoliAPI_db",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "EndingPipeline",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "sp_ProcessValues",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[RDF].[sp_PipelineStatus]",
+								"storedProcedureParameters": {
+									"PipelineName": {
+										"value": "ProcessAOMData",
+										"type": "String"
+									},
+									"Status": {
+										"value": "Complete",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "TivoliAPI_db",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-12-01T09:11:49Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

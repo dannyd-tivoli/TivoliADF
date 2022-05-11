@@ -1,0 +1,71 @@
+{
+	"name": "Applications_POSystem_OAProjectCodesCombined_FromOA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ProjCodesCombID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProjectCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectShortName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectCustomerNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "workstage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WorkstageName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityCodeName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityCategory",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ActivityType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UseInPOSystem",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "POSystem",
+			"table": "OACombinedProjectCodesFromOA"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

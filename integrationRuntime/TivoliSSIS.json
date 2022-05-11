@@ -1,0 +1,36 @@
+{
+	"name": "TivoliSSIS",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "UK South",
+				"nodeSize": "Standard_D2_v3",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 1
+			},
+			"ssisProperties": {
+				"catalogInfo": {
+					"catalogServerEndpoint": "tivoli.database.windows.net",
+					"catalogAdminUserName": "TivoliAdmin",
+					"catalogAdminPassword": {
+						"type": "SecureString",
+						"value": "**********"
+					},
+					"catalogPricingTier": "S1"
+				},
+				"edition": "Standard",
+				"licenseType": "BasePrice",
+				"packageStores": [
+					{
+						"name": "TivoliSSISPackages",
+						"packageStoreLinkedService": {
+							"referenceName": "TivoliSSISLinkedService",
+							"type": "LinkedServiceReference"
+						}
+					}
+				]
+			}
+		}
+	}
+}

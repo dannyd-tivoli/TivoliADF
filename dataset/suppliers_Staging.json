@@ -1,0 +1,43 @@
+{
+	"name": "suppliers_Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PowerBI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SupplierEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SupplierName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SupplierPostcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SupplierCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Address1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Phone",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "tbl_Suppliers_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

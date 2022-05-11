@@ -1,0 +1,40 @@
+{
+	"name": "posystem_regional_managers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "RegionalManagerCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RegionalManagerEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RegionalManagerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RegionalDirectorCode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RegionalDirectorRegion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "POSystem",
+			"table": "RegionalManagers"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

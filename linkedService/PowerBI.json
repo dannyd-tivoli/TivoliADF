@@ -1,0 +1,12 @@
+{
+	"name": "PowerBI",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=isswinterisation.database.windows.net,1433;initial catalog=PowerBI;user id=WinterAdmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEFBRTNGMDY0LTZGRTAtNEVCRS05NUMwLTlFRDNGQzM2NEYwRl9iNmE4Mzg5Yi05MDlkLTQ4NjEtYjRiNy03ZmY2ZWY4NGVjNmMiDQp9"
+		}
+	}
+}

@@ -1,0 +1,196 @@
+{
+	"name": "sw_site_data_stagng",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliAPI_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sw_ref",
+				"type": "varchar"
+			},
+			{
+				"name": "site",
+				"type": "varchar"
+			},
+			{
+				"name": "team",
+				"type": "varchar"
+			},
+			{
+				"name": "week",
+				"type": "varchar"
+			},
+			{
+				"name": "pcode",
+				"type": "varchar"
+			},
+			{
+				"name": "map",
+				"type": "varchar"
+			},
+			{
+				"name": "location",
+				"type": "varchar"
+			},
+			{
+				"name": "town",
+				"type": "varchar"
+			},
+			{
+				"name": "address",
+				"type": "varchar"
+			},
+			{
+				"name": "postcode",
+				"type": "varchar"
+			},
+			{
+				"name": "site_address",
+				"type": "varchar"
+			},
+			{
+				"name": "grid",
+				"type": "varchar"
+			},
+			{
+				"name": "latitude",
+				"type": "varchar"
+			},
+			{
+				"name": "longitude",
+				"type": "varchar"
+			},
+			{
+				"name": "dept_id",
+				"type": "varchar"
+			},
+			{
+				"name": "dept_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "sw_region",
+				"type": "varchar"
+			},
+			{
+				"name": "sw_team",
+				"type": "varchar"
+			},
+			{
+				"name": "site_contact",
+				"type": "varchar"
+			},
+			{
+				"name": "site_phone",
+				"type": "varchar"
+			},
+			{
+				"name": "function",
+				"type": "varchar"
+			},
+			{
+				"name": "grass_m",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "gras_freq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "hard_m",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "hard_freq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rough_m",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "rough_freq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "invasive_m",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "invasive_freq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "hedge_m",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "hedge_freq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "shrub_m",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "shrub_freq",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "risk",
+				"type": "varchar"
+			},
+			{
+				"name": "access",
+				"type": "varchar"
+			},
+			{
+				"name": "comments",
+				"type": "varchar"
+			},
+			{
+				"name": "r_manager",
+				"type": "varchar"
+			},
+			{
+				"name": "a_manager",
+				"type": "varchar"
+			},
+			{
+				"name": "tops_user",
+				"type": "varchar"
+			},
+			{
+				"name": "tos_account",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "SW_Site_Data_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

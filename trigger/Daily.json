@@ -1,0 +1,29 @@
+{
+	"name": "Daily",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "LoadFAandEmpData",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2021-11-29T00:00:00Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"hours": [
+						4
+					]
+				}
+			}
+		}
+	}
+}

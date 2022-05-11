@@ -1,0 +1,50 @@
+{
+	"name": "projects_staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PowerBI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ProjectCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomerCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SiteAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Tivoli",
+			"table": "tbl_EW_Projects_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,59 @@
+{
+	"name": "SQL_Applications_SW_Contract_Rates",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sw_ref",
+				"type": "nvarchar"
+			},
+			{
+				"name": "site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "task",
+				"type": "nvarchar"
+			},
+			{
+				"name": "value",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
+			},
+			{
+				"name": "DateAdded",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "DateModified",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "DateDeleted",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "SW",
+			"table": "SW_Contract_Rates"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

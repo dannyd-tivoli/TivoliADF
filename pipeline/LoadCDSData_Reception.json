@@ -1,0 +1,274 @@
+{
+	"name": "LoadCDSData_Reception",
+	"properties": {
+		"activities": [
+			{
+				"name": "sp_ClearCDSData",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[POSystem].[sp_ClearCDSData]"
+				},
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "project_codes",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ProjectCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProjectCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProjectName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ClientCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ClientCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ClientName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ClientName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ManagerName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_project_codes",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Reception_POSystem_ProjectCodes",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "activity_codes",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_ClearCDSData",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ActivityCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivityName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivityCategory",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityCategory",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivityType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ActivityType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "cds_activity_codes",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Reception_POSystem_ActivityCodes",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-02-18T11:10:27Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

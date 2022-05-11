@@ -1,0 +1,36 @@
+{
+	"name": "tbl_PipelineRuns",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliAPI_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PipelineName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StatusDate",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "RDF",
+			"table": "tbl_PipelineRuns"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

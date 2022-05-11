@@ -1,0 +1,153 @@
+{
+	"name": "SQL_Reception_Cascade_Employee_Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Reception",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Employee Id",
+				"type": "varchar"
+			},
+			{
+				"name": "Title",
+				"type": "varchar"
+			},
+			{
+				"name": "Firstname",
+				"type": "varchar"
+			},
+			{
+				"name": "Surname",
+				"type": "varchar"
+			},
+			{
+				"name": "Known As",
+				"type": "varchar"
+			},
+			{
+				"name": "Current Position",
+				"type": "varchar"
+			},
+			{
+				"name": "Hierarchy",
+				"type": "varchar"
+			},
+			{
+				"name": "Work Email",
+				"type": "varchar"
+			},
+			{
+				"name": "Driver",
+				"type": "varchar"
+			},
+			{
+				"name": "Location",
+				"type": "varchar"
+			},
+			{
+				"name": "Cont  Service Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Start Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Date of Birth",
+				"type": "varchar"
+			},
+			{
+				"name": "Gender",
+				"type": "varchar"
+			},
+			{
+				"name": "Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Work Phone",
+				"type": "varchar"
+			},
+			{
+				"name": "Work Mobile Phone Number",
+				"type": "varchar"
+			},
+			{
+				"name": "Post Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Job Title",
+				"type": "varchar"
+			},
+			{
+				"name": "Contract",
+				"type": "varchar"
+			},
+			{
+				"name": "Grade",
+				"type": "varchar"
+			},
+			{
+				"name": "Pay Frequency",
+				"type": "varchar"
+			},
+			{
+				"name": "Project Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Skill Level",
+				"type": "varchar"
+			},
+			{
+				"name": "FTE",
+				"type": "varchar"
+			},
+			{
+				"name": "Hours",
+				"type": "varchar"
+			},
+			{
+				"name": "Basic Pay",
+				"type": "varchar"
+			},
+			{
+				"name": "Pay Basis",
+				"type": "varchar"
+			},
+			{
+				"name": "Fixed Term Contract End Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Hourly Rate",
+				"type": "varchar"
+			},
+			{
+				"name": "Works For",
+				"type": "varchar"
+			},
+			{
+				"name": "Left Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Last Working Day",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Cascade",
+			"table": "Employee_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,69 @@
+{
+	"name": "SQL_Applications_TempTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "machinetype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "make",
+				"type": "nvarchar"
+			},
+			{
+				"name": "model",
+				"type": "nvarchar"
+			},
+			{
+				"name": "noiseleveldecibles",
+				"type": "nvarchar"
+			},
+			{
+				"name": "bookmagnitude",
+				"type": "nvarchar"
+			},
+			{
+				"name": "wearandtearallowance",
+				"type": "nvarchar"
+			},
+			{
+				"name": "actualvibrationmagnitude",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exposurepointminsperhour",
+				"type": "nvarchar"
+			},
+			{
+				"name": "timetoreacheav",
+				"type": "nvarchar"
+			},
+			{
+				"name": "timetoreachelv",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exposuredurationtwa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exposurepointsdailysinglemachine",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ffs"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

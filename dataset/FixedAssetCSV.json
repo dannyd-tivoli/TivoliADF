@@ -1,0 +1,173 @@
+{
+	"name": "FixedAssetCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "FixedAssets.csv",
+				"container": "tivoli-excel"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Activity",
+				"type": "String"
+			},
+			{
+				"name": "Asset_Tag",
+				"type": "String"
+			},
+			{
+				"name": "Category_1",
+				"type": "String"
+			},
+			{
+				"name": "Category_2",
+				"type": "String"
+			},
+			{
+				"name": "Category_3",
+				"type": "String"
+			},
+			{
+				"name": "Comments",
+				"type": "String"
+			},
+			{
+				"name": "Condition",
+				"type": "String"
+			},
+			{
+				"name": "Current_NBV",
+				"type": "String"
+			},
+			{
+				"name": "Date_last_verified",
+				"type": "String"
+			},
+			{
+				"name": "Depn_Life",
+				"type": "String"
+			},
+			{
+				"name": "Expected_weekly_checks",
+				"type": "String"
+			},
+			{
+				"name": "Exposure",
+				"type": "String"
+			},
+			{
+				"name": "F_Index",
+				"type": "String"
+			},
+			{
+				"name": "Fuel_Type",
+				"type": "String"
+			},
+			{
+				"name": "Havs",
+				"type": "String"
+			},
+			{
+				"name": "Invoice_No",
+				"type": "String"
+			},
+			{
+				"name": "Maintenance_costs",
+				"type": "String"
+			},
+			{
+				"name": "Maintenance_date",
+				"type": "String"
+			},
+			{
+				"name": "Make",
+				"type": "String"
+			},
+			{
+				"name": "Model",
+				"type": "String"
+			},
+			{
+				"name": "Monthly_Depn",
+				"type": "String"
+			},
+			{
+				"name": "OA_Index",
+				"type": "String"
+			},
+			{
+				"name": "Opening_NBV",
+				"type": "String"
+			},
+			{
+				"name": "Original_Owner",
+				"type": "String"
+			},
+			{
+				"name": "Original_Value",
+				"type": "String"
+			},
+			{
+				"name": "PRIN",
+				"type": "String"
+			},
+			{
+				"name": "Project_Code",
+				"type": "String"
+			},
+			{
+				"name": "Purchased",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Registration",
+				"type": "String"
+			},
+			{
+				"name": "Responsible",
+				"type": "String"
+			},
+			{
+				"name": "Serial_Number",
+				"type": "String"
+			},
+			{
+				"name": "Site",
+				"type": "String"
+			},
+			{
+				"name": "TOPsCategory",
+				"type": "String"
+			},
+			{
+				"name": "UR_DW",
+				"type": "String"
+			},
+			{
+				"name": "Upload",
+				"type": "String"
+			},
+			{
+				"name": "V5_Recorded",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,1049 @@
+{
+	"name": "SW_DataRefresh",
+	"properties": {
+		"activities": [
+			{
+				"name": "ContractRates",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table sw.sw_contract_rates",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "task",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "task",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "value",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "value",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 12
+								}
+							},
+							{
+								"source": {
+									"name": "DateAdded",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateAdded",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "DateModified",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateModified",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Excel_SW_ContractRates",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_Applications_SW_Contract_Rates",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "SiteData",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table sw.sw_site_data",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Site_ref",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "team",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "team",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "week",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "week",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "pcode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pcode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "map",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "map",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "town",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "town",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "address",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "address",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "postcode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "postcode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site_address",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site_address",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "grid",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "grid",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "latitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "latitude",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "longitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "longitude",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dept_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dept_id",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dept_desc",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dept_desc",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Site_Phone",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site_phone",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "grass_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "grass_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "gras_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "gras_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "hard_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hard_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "hard_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hard_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "rough_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rough_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "rough_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rough_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "invasive_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "invasive_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "invasive_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "invasive_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "hedge_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hedge_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "hedge_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hedge_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "shrub_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "shrub_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "shrub_freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "shrub_freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "risk",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "risk",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "access",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "access",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "comments",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "comments",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "r_manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "r_manager",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "a_manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "a_manager",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "tops_user",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tops_user",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "tos_account",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tos_account",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DateAdded",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateAdded",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "DateModified",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateModified",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Dep level 3",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dep Level 3",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Dep level 2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dep Level 2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Dep level 1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dep Level 1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SW_Manager",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SW_Manager",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Contact",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SW_Site_Contact",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SW_Site_Contact",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LitterLeaf_Freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LitterLeaf_Freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "LitterLeaf_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LitterLeaf_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Trees_Freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Trees_Freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Trees_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Trees_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Gullies_Freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gullies_Freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Gullies_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gullies_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Planters_Freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Planters_Freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Planters_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Planters_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "SiteVisit_Freq",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SiteVisit_Freq",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "SiteVisit_m",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SiteVisit_m",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Excel_SW_SiteData",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_Applications_SW_Site_Data",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "FinanceCodes",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table sw.sw_finance_codes",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "sw_ref",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "site",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "function",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DateAdded",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateAdded",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "DateModified",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateModified",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Dep Level 3",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dep Level 3",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Dep Level 2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dep Level 2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Dep Level 1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Dep Level 1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Excel_SW_FinanceCodes",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_Applications_SW_Finance_Codes",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "SW"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-01T10:47:49Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

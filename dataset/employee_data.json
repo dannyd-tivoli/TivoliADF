@@ -1,0 +1,117 @@
+{
+	"name": "employee_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TivoliBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Employees.csv",
+				"container": "tivoli-topsdatabase"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "payroll",
+				"type": "String"
+			},
+			{
+				"name": "tops",
+				"type": "String"
+			},
+			{
+				"name": "forename",
+				"type": "String"
+			},
+			{
+				"name": "surname",
+				"type": "String"
+			},
+			{
+				"name": "lowercase",
+				"type": "String"
+			},
+			{
+				"name": "know as",
+				"type": "String"
+			},
+			{
+				"name": "job",
+				"type": "String"
+			},
+			{
+				"name": "start",
+				"type": "String"
+			},
+			{
+				"name": "leave",
+				"type": "String"
+			},
+			{
+				"name": "leave_date",
+				"type": "String"
+			},
+			{
+				"name": "email",
+				"type": "String"
+			},
+			{
+				"name": "work_type",
+				"type": "String"
+			},
+			{
+				"name": "base",
+				"type": "String"
+			},
+			{
+				"name": "pcode",
+				"type": "String"
+			},
+			{
+				"name": "p_name",
+				"type": "String"
+			},
+			{
+				"name": "c_name",
+				"type": "String"
+			},
+			{
+				"name": "operations",
+				"type": "String"
+			},
+			{
+				"name": "teaml",
+				"type": "String"
+			},
+			{
+				"name": "super",
+				"type": "String"
+			},
+			{
+				"name": "manager",
+				"type": "String"
+			},
+			{
+				"name": "am_code",
+				"type": "String"
+			},
+			{
+				"name": "region",
+				"type": "String"
+			},
+			{
+				"name": "topsac",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

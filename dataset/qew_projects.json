@@ -1,0 +1,50 @@
+{
+	"name": "qew_projects",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Applications2_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ProjectCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CustomerCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SiteAddress",
+				"type": "varchar"
+			},
+			{
+				"name": "Status",
+				"type": "varchar"
+			},
+			{
+				"name": "ManagerEmail",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "QEW",
+			"table": "vw_Projects"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,210 @@
+{
+	"name": "Import_ExcelBlobToAzure_Template",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MachineType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "machinetype",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Make",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "make",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Model",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "model",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NoiseLevelDecibels",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "noiseleveldecibles",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BookMagnitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "bookmagnitude",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WearAndTearAllowance",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "wearandtearallowance",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActualVibrationMagnitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "actualvibrationmagnitude",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ExposurePointminsperhour",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "exposurepointminsperhour",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TimeToReachEAV",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "timetoreacheav",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TimeToReachELV",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "timetoreachelv",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ExposureDurationTWA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "exposuredurationtwa",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ExposurePointsDailySingleMachine",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "exposurepointsdailysinglemachine",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Excel_TempSpreadsheet",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_Applications_TempTable",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Template"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-19T08:43:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
