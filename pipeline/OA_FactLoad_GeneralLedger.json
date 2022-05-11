@@ -4,9 +4,16 @@
 		"description": "GL Data from Open Accounts",
 		"activities": [
 			{
-				"name": "LastRunDate",
+				"name": "LastRunDate_GL",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -33,7 +40,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Dim Pipeline",
+						"activity": "Set _LastDateTime_GL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -53,7 +60,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"LastRunDate": {
-								"value": "'@{variables('_LastRunDateTime')}'",
+								"value": "'@{variables('_LastRunDateTime_GL')}'",
 								"type": "Expression"
 							}
 						}
@@ -66,11 +73,11 @@
 				}
 			},
 			{
-				"name": "Set _LastDateTime",
+				"name": "Set _LastDateTime_GL",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "LastRunDate",
+						"activity": "LastRunDate_GL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -78,9 +85,9 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "_LastRunDateTime",
+					"variableName": "_LastRunDateTime_GL",
 					"value": {
-						"value": "@formatDateTime(activity('LastRunDate').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+						"value": "@formatDateTime(activity('LastRunDate_GL').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
 						"type": "Expression"
 					}
 				}
@@ -88,20 +95,7 @@
 			{
 				"name": "CurrentDate",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Load OA Fact GL",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Load OA Fact PT",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "_CurrentDate",
@@ -116,7 +110,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "CurrentDate",
+						"activity": "Load OA Fact GL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -156,7 +150,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Set _LastDateTime",
+						"activity": "CurrentDate",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -176,7 +170,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Dim Pipeline",
+						"activity": "Set _LastDateTime_PT",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -195,7 +189,10 @@
 						"referenceName": "oa_fact_ProjectTransactions_df",
 						"type": "DataFlowReference",
 						"parameters": {
-							"LastRunDate": "\"2022-05-09 00:00:00\""
+							"LastRunDate": {
+								"value": "'@{variables('_LastRunDateTime_PT')}'",
+								"type": "Expression"
+							}
 						}
 					},
 					"compute": {
@@ -210,7 +207,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "CurrentDate",
+						"activity": "Load OA Fact PT",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -244,13 +241,68 @@
 					"referenceName": "TiviliDW_db",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "LastRunDate_PT",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Dim Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'oa_pctrans'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "TivoliDW_db",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Set _LastDateTime_PT",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LastRunDate_PT",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "_LastRunDateTime_GL",
+					"value": {
+						"value": "@formatDateTime(activity('LastRunDate_PT').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
-			"_LastRunDateTime": {
+			"_LastRunDateTime_GL": {
 				"type": "String"
 			},
 			"_CurrentDate": {
+				"type": "String"
+			},
+			"_LastRunDateTime_PT": {
 				"type": "String"
 			}
 		},
