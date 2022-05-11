@@ -1,0 +1,253 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "TivoliADF"
+		},
+		"Applications2_db_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Applications2_db'"
+		},
+		"Applications_db_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Applications_db'"
+		},
+		"Ftp_Cascade_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Ftp_Cascade'"
+		},
+		"PowerBI_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PowerBI'"
+		},
+		"Reception_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Reception'"
+		},
+		"TiviliDW_db_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TiviliDW_db'"
+		},
+		"TivoliAPI_db_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TivoliAPI_db'"
+		},
+		"TivoliBlob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TivoliBlob'"
+		},
+		"TivoliSSISLinkedService_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TivoliSSISLinkedService'"
+		},
+		"Ftp_Cascade_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "www.tivoliservices.com"
+		},
+		"Ftp_Cascade_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "HRPayroll"
+		},
+		"TivoliKeys_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://TivoliKeys.vault.azure.net/"
+		},
+		"WhenFileArrives_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/5697a3d1-2163-4132-b12c-5e365b35ff40/resourceGroups/TivoliData/providers/Microsoft.Storage/storageAccounts/tivoli"
+		},
+		"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "tivoli.database.windows.net"
+		},
+		"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "TivoliAdmin"
+		},
+		"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "TivoliADF_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Applications2_db_connectionString": {
+						"value": "[parameters('Applications2_db_connectionString')]"
+					},
+					"Applications_db_connectionString": {
+						"value": "[parameters('Applications_db_connectionString')]"
+					},
+					"Ftp_Cascade_password": {
+						"value": "[parameters('Ftp_Cascade_password')]"
+					},
+					"PowerBI_connectionString": {
+						"value": "[parameters('PowerBI_connectionString')]"
+					},
+					"Reception_connectionString": {
+						"value": "[parameters('Reception_connectionString')]"
+					},
+					"TiviliDW_db_connectionString": {
+						"value": "[parameters('TiviliDW_db_connectionString')]"
+					},
+					"TivoliAPI_db_connectionString": {
+						"value": "[parameters('TivoliAPI_db_connectionString')]"
+					},
+					"TivoliBlob_connectionString": {
+						"value": "[parameters('TivoliBlob_connectionString')]"
+					},
+					"TivoliSSISLinkedService_connectionString": {
+						"value": "[parameters('TivoliSSISLinkedService_connectionString')]"
+					},
+					"Ftp_Cascade_properties_typeProperties_host": {
+						"value": "[parameters('Ftp_Cascade_properties_typeProperties_host')]"
+					},
+					"Ftp_Cascade_properties_typeProperties_userName": {
+						"value": "[parameters('Ftp_Cascade_properties_typeProperties_userName')]"
+					},
+					"TivoliKeys_properties_typeProperties_baseUrl": {
+						"value": "[parameters('TivoliKeys_properties_typeProperties_baseUrl')]"
+					},
+					"WhenFileArrives_properties_typeProperties_scope": {
+						"value": "[parameters('WhenFileArrives_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "TivoliADF_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'TivoliADF_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "TivoliADF_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'TivoliADF_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "TivoliADF_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+						"value": "[parameters('TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
+					},
+					"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+						"value": "[parameters('TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]"
+					},
+					"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+						"value": "[parameters('TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'TivoliADF_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "TivoliADF_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'TivoliADF_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "TivoliADF_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'TivoliADF_ArmTemplate_4')]"
+			]
+		}
+	]
+}

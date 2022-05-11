@@ -1,0 +1,2105 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "TivoliADF"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_SW_ContractRates')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Excel"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Contract Rates",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Amended SW Data Tables 2022.xlsx",
+						"container": "tivoli-excel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "sw_ref",
+						"type": "String"
+					},
+					{
+						"name": "site",
+						"type": "String"
+					},
+					{
+						"name": "task",
+						"type": "String"
+					},
+					{
+						"name": "value",
+						"type": "String"
+					},
+					{
+						"name": "DateAdded",
+						"type": "String"
+					},
+					{
+						"name": "DateModified",
+						"type": "String"
+					},
+					{
+						"name": "DateDeleted",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_SW_FinanceCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Excel"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Finance Codes",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Amended SW Data Tables 2022.xlsx",
+						"container": "tivoli-excel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "sw_ref",
+						"type": "String"
+					},
+					{
+						"name": "site",
+						"type": "String"
+					},
+					{
+						"name": "Dep Level 3",
+						"type": "String"
+					},
+					{
+						"name": "Dep Level 2",
+						"type": "String"
+					},
+					{
+						"name": "Dep Level 1",
+						"type": "String"
+					},
+					{
+						"name": "function",
+						"type": "String"
+					},
+					{
+						"name": "DateAdded",
+						"type": "String"
+					},
+					{
+						"name": "DateModified",
+						"type": "String"
+					},
+					{
+						"name": "DateDeleted",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_SW_SiteData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Excel"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Site Data",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Amended SW Data Tables 2022.xlsx",
+						"container": "tivoli-excel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Site_ref",
+						"type": "String"
+					},
+					{
+						"name": "site",
+						"type": "String"
+					},
+					{
+						"name": "team",
+						"type": "String"
+					},
+					{
+						"name": "week",
+						"type": "String"
+					},
+					{
+						"name": "pcode",
+						"type": "String"
+					},
+					{
+						"name": "map",
+						"type": "String"
+					},
+					{
+						"name": "location",
+						"type": "String"
+					},
+					{
+						"name": "town",
+						"type": "String"
+					},
+					{
+						"name": "address",
+						"type": "String"
+					},
+					{
+						"name": "postcode",
+						"type": "String"
+					},
+					{
+						"name": "site_address",
+						"type": "String"
+					},
+					{
+						"name": "grid",
+						"type": "String"
+					},
+					{
+						"name": "latitude",
+						"type": "String"
+					},
+					{
+						"name": "longitude",
+						"type": "String"
+					},
+					{
+						"name": "dept_id",
+						"type": "String"
+					},
+					{
+						"name": "dept_desc",
+						"type": "String"
+					},
+					{
+						"name": "Dep level 3",
+						"type": "String"
+					},
+					{
+						"name": "Dep level 2",
+						"type": "String"
+					},
+					{
+						"name": "Dep level 1",
+						"type": "String"
+					},
+					{
+						"name": "SW_Manager",
+						"type": "String"
+					},
+					{
+						"name": "Contact",
+						"type": "String"
+					},
+					{
+						"name": "SW_Site_Contact",
+						"type": "String"
+					},
+					{
+						"name": "Site_Phone",
+						"type": "String"
+					},
+					{
+						"name": "function",
+						"type": "String"
+					},
+					{
+						"name": "grass_m",
+						"type": "String"
+					},
+					{
+						"name": "gras_freq",
+						"type": "String"
+					},
+					{
+						"name": "rough_m",
+						"type": "String"
+					},
+					{
+						"name": "rough_freq",
+						"type": "String"
+					},
+					{
+						"name": "shrub_m",
+						"type": "String"
+					},
+					{
+						"name": "shrub_freq",
+						"type": "String"
+					},
+					{
+						"name": "hedge_m",
+						"type": "String"
+					},
+					{
+						"name": "hedge_freq",
+						"type": "String"
+					},
+					{
+						"name": "hard_m",
+						"type": "String"
+					},
+					{
+						"name": "hard_freq",
+						"type": "String"
+					},
+					{
+						"name": "LitterLeaf_Freq",
+						"type": "String"
+					},
+					{
+						"name": "LitterLeaf_m",
+						"type": "String"
+					},
+					{
+						"name": "invasive_m",
+						"type": "String"
+					},
+					{
+						"name": "invasive_freq",
+						"type": "String"
+					},
+					{
+						"name": "Trees_Freq",
+						"type": "String"
+					},
+					{
+						"name": "Trees_m",
+						"type": "String"
+					},
+					{
+						"name": "Gullies_Freq",
+						"type": "String"
+					},
+					{
+						"name": "Gullies_m",
+						"type": "String"
+					},
+					{
+						"name": "Planters_Freq",
+						"type": "String"
+					},
+					{
+						"name": "Planters_m",
+						"type": "String"
+					},
+					{
+						"name": "SiteVisit_Freq",
+						"type": "String"
+					},
+					{
+						"name": "SiteVisit_m",
+						"type": "String"
+					},
+					{
+						"name": "risk",
+						"type": "String"
+					},
+					{
+						"name": "access",
+						"type": "String"
+					},
+					{
+						"name": "comments",
+						"type": "String"
+					},
+					{
+						"name": "r_manager",
+						"type": "String"
+					},
+					{
+						"name": "a_manager",
+						"type": "String"
+					},
+					{
+						"name": "tops_user",
+						"type": "String"
+					},
+					{
+						"name": "tos_account",
+						"type": "String"
+					},
+					{
+						"name": "DateAdded",
+						"type": "String"
+					},
+					{
+						"name": "DateModified",
+						"type": "String"
+					},
+					{
+						"name": "DateDeleted",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_TempSpreadsheet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Excel"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet2",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Book1.xlsx",
+						"container": "tivoli-excel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "MachineType",
+						"type": "String"
+					},
+					{
+						"name": "Make",
+						"type": "String"
+					},
+					{
+						"name": "Model",
+						"type": "String"
+					},
+					{
+						"name": "NoiseLevelDecibels",
+						"type": "String"
+					},
+					{
+						"name": "BookMagnitude",
+						"type": "String"
+					},
+					{
+						"name": "WearAndTearAllowance",
+						"type": "String"
+					},
+					{
+						"name": "ActualVibrationMagnitude",
+						"type": "String"
+					},
+					{
+						"name": "ExposurePointminsperhour",
+						"type": "String"
+					},
+					{
+						"name": "TimeToReachEAV",
+						"type": "String"
+					},
+					{
+						"name": "TimeToReachELV",
+						"type": "String"
+					},
+					{
+						"name": "ExposureDurationTWA",
+						"type": "String"
+					},
+					{
+						"name": "ExposurePointsDailySingleMachine",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactGL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "unqkey",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BatchReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DocumentNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LineNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CostCentreID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DocumentTypeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TransactionTypeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ActivityCodeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TransactionDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DocumentDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InputDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InputTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SupplierID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "YearNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Period",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SourceReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OriginReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BaseValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "CurrentValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Quantity",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "QuantityUnits",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VatCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactGeneralLedger"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactPT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "unqkey",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CostCentreID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DocumentTypeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TransactionTypeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ActivityCodeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WorkStageID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProjectID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DocumentDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "InputDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BatchReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DocumentNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LineNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "YearNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Period",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SourceReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BaseValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "CurrentValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Quantity",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "QuantityUnits",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VatCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Resource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Currency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Deleted",
+						"type": "bit"
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactProjectTransaction"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FixedAssetCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "FixedAssets.csv",
+						"container": "tivoli-excel"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Activity",
+						"type": "String"
+					},
+					{
+						"name": "Asset_Tag",
+						"type": "String"
+					},
+					{
+						"name": "Category_1",
+						"type": "String"
+					},
+					{
+						"name": "Category_2",
+						"type": "String"
+					},
+					{
+						"name": "Category_3",
+						"type": "String"
+					},
+					{
+						"name": "Comments",
+						"type": "String"
+					},
+					{
+						"name": "Condition",
+						"type": "String"
+					},
+					{
+						"name": "Current_NBV",
+						"type": "String"
+					},
+					{
+						"name": "Date_last_verified",
+						"type": "String"
+					},
+					{
+						"name": "Depn_Life",
+						"type": "String"
+					},
+					{
+						"name": "Expected_weekly_checks",
+						"type": "String"
+					},
+					{
+						"name": "Exposure",
+						"type": "String"
+					},
+					{
+						"name": "F_Index",
+						"type": "String"
+					},
+					{
+						"name": "Fuel_Type",
+						"type": "String"
+					},
+					{
+						"name": "Havs",
+						"type": "String"
+					},
+					{
+						"name": "Invoice_No",
+						"type": "String"
+					},
+					{
+						"name": "Maintenance_costs",
+						"type": "String"
+					},
+					{
+						"name": "Maintenance_date",
+						"type": "String"
+					},
+					{
+						"name": "Make",
+						"type": "String"
+					},
+					{
+						"name": "Model",
+						"type": "String"
+					},
+					{
+						"name": "Monthly_Depn",
+						"type": "String"
+					},
+					{
+						"name": "OA_Index",
+						"type": "String"
+					},
+					{
+						"name": "Opening_NBV",
+						"type": "String"
+					},
+					{
+						"name": "Original_Owner",
+						"type": "String"
+					},
+					{
+						"name": "Original_Value",
+						"type": "String"
+					},
+					{
+						"name": "PRIN",
+						"type": "String"
+					},
+					{
+						"name": "Project_Code",
+						"type": "String"
+					},
+					{
+						"name": "Purchased",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Registration",
+						"type": "String"
+					},
+					{
+						"name": "Responsible",
+						"type": "String"
+					},
+					{
+						"name": "Serial_Number",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "TOPsCategory",
+						"type": "String"
+					},
+					{
+						"name": "UR_DW",
+						"type": "String"
+					},
+					{
+						"name": "Upload",
+						"type": "String"
+					},
+					{
+						"name": "V5_Recorded",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_Employyees_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "payroll",
+						"type": "varchar"
+					},
+					{
+						"name": "tops",
+						"type": "varchar"
+					},
+					{
+						"name": "forename",
+						"type": "varchar"
+					},
+					{
+						"name": "surname",
+						"type": "varchar"
+					},
+					{
+						"name": "lowercase",
+						"type": "varchar"
+					},
+					{
+						"name": "KnownAs",
+						"type": "nvarchar"
+					},
+					{
+						"name": "job",
+						"type": "varchar"
+					},
+					{
+						"name": "email",
+						"type": "varchar"
+					},
+					{
+						"name": "work_type",
+						"type": "varchar"
+					},
+					{
+						"name": "base",
+						"type": "varchar"
+					},
+					{
+						"name": "pcode",
+						"type": "varchar"
+					},
+					{
+						"name": "p_name",
+						"type": "varchar"
+					},
+					{
+						"name": "c_type",
+						"type": "varchar"
+					},
+					{
+						"name": "teaml",
+						"type": "varchar"
+					},
+					{
+						"name": "super",
+						"type": "varchar"
+					},
+					{
+						"name": "manager",
+						"type": "varchar"
+					},
+					{
+						"name": "am_code",
+						"type": "varchar"
+					},
+					{
+						"name": "Region",
+						"type": "varchar"
+					},
+					{
+						"name": "tops_ac",
+						"type": "varchar"
+					},
+					{
+						"name": "ChangeStatus",
+						"type": "varchar"
+					},
+					{
+						"name": "Operations",
+						"type": "varchar"
+					},
+					{
+						"name": "Leave",
+						"type": "varchar"
+					},
+					{
+						"name": "StartDate",
+						"type": "varchar"
+					},
+					{
+						"name": "LeaveDate",
+						"type": "varchar"
+					},
+					{
+						"name": "SupervisorID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TeamLeaderID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagerID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "Tivoli",
+					"table": "Employees_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_FactBudget_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WorkstageCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PackName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TabName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "April",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "May",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "June",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "July",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "August",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "September",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "October",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "November",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "December",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "January",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "February",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "March",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "FinancialYear",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "Finance",
+					"table": "Budget_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_FixedAssets_staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "F_Index",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OA_Index",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Original_Owner",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Asset_Tag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Project_Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Responsible",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PRIN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Invoice_No",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Activity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Purchased",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Depn_Life",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Original_Value",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Opening_NBV",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Monthly_Depn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Current_NBV",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "UR_DW",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Category_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Category_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Category_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TOPsCategory",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Expected_weekly_checks",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Condition",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Make",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Model",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Registration",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Fuel_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "V5_Recorded",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Serial_Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Comments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Havs",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exposure",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Date_last_verified",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Maintenance_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Maintenance_costs",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Upload",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "Tivoli",
+					"table": "FixedAssets_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_OA_ProjectCodesCombined')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "project",
+						"type": "varchar"
+					},
+					{
+						"name": "panlcode",
+						"type": "varchar"
+					},
+					{
+						"name": "workstage",
+						"type": "varchar"
+					},
+					{
+						"name": "del",
+						"type": "bit"
+					},
+					{
+						"name": "autoload",
+						"type": "bit"
+					},
+					{
+						"name": "stdate",
+						"type": "date"
+					},
+					{
+						"name": "endate",
+						"type": "date"
+					},
+					{
+						"name": "stat",
+						"type": "varchar"
+					},
+					{
+						"name": "rulecode",
+						"type": "varchar"
+					},
+					{
+						"name": "unqkey",
+						"type": "varchar"
+					},
+					{
+						"name": "xchar2",
+						"type": "varchar"
+					},
+					{
+						"name": "xdate1",
+						"type": "date"
+					},
+					{
+						"name": "xdate2",
+						"type": "date"
+					},
+					{
+						"name": "xlog1",
+						"type": "bit"
+					},
+					{
+						"name": "xlog2",
+						"type": "bit"
+					},
+					{
+						"name": "xchar1",
+						"type": "varchar"
+					},
+					{
+						"name": "billinglimit",
+						"type": "decimal",
+						"precision": 17,
+						"scale": 2
+					},
+					{
+						"name": "UpdatedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "OA",
+					"table": "oa_pcvalcmb"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_POSystem_ActivityCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ActivityCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityCategory",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityType",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "ActivityCodes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_POSystem_ProjectCodes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "ProjectCodes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Reception_db')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Databases"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_ActiveEmployeesByManager')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EmployeeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagerID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "Onboarding",
+					"table": "ActiveEmployeesByManager"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Contract_Rates')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "sw_ref",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "task",
+						"type": "nvarchar"
+					},
+					{
+						"name": "value",
+						"type": "decimal",
+						"precision": 12,
+						"scale": 2
+					},
+					{
+						"name": "DateAdded",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateModified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateDeleted",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "SW",
+					"table": "SW_Contract_Rates"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Finance_Codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "sw_ref",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DateAdded",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateModified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateDeleted",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Dep Level 3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Dep Level 2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Dep Level 1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "SW",
+					"table": "SW_Finance_Codes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Site_Data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "sw_ref",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "team",
+						"type": "nvarchar"
+					},
+					{
+						"name": "week",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "map",
+						"type": "nvarchar"
+					},
+					{
+						"name": "location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "town",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "postcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site_address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "grid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "latitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "longitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dept_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "dept_desc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site_contact",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site_phone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "grass_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "gras_freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "hard_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "hard_freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rough_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "rough_freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "invasive_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "invasive_freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "hedge_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "hedge_freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "shrub_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "shrub_freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "risk",
+						"type": "nvarchar"
+					},
+					{
+						"name": "access",
+						"type": "nvarchar"
+					},
+					{
+						"name": "comments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "r_manager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "a_manager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tops_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "tos_account",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DateAdded",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateModified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateDeleted",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Dep Level 3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Dep Level 2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Dep Level 1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SW_Manager",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Contact",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SW_Site_Contact",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LitterLeaf_Freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LitterLeaf_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "Trees_Freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trees_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "Gullies_Freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Gullies_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "Planters_Freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planters_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "SiteVisit_Freq",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SiteVisit_m",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "SW",
+					"table": "SW_Site_Data"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_TempTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "machinetype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "make",
+						"type": "nvarchar"
+					},
+					{
+						"name": "model",
+						"type": "nvarchar"
+					},
+					{
+						"name": "noiseleveldecibles",
+						"type": "nvarchar"
+					},
+					{
+						"name": "bookmagnitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "wearandtearallowance",
+						"type": "nvarchar"
+					},
+					{
+						"name": "actualvibrationmagnitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exposurepointminsperhour",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timetoreacheav",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timetoreachelv",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exposuredurationtwa",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exposurepointsdailysinglemachine",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ffs"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

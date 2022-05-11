@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "TivoliADF"
+		},
+		"Applications2_db_connectionString": {
+			"value": ""
+		},
+		"Applications_db_connectionString": {
+			"value": ""
+		},
+		"Ftp_Cascade_password": {
+			"value": ""
+		},
+		"PowerBI_connectionString": {
+			"value": ""
+		},
+		"Reception_connectionString": {
+			"value": ""
+		},
+		"TiviliDW_db_connectionString": {
+			"value": ""
+		},
+		"TivoliAPI_db_connectionString": {
+			"value": ""
+		},
+		"TivoliBlob_connectionString": {
+			"value": ""
+		},
+		"TivoliSSISLinkedService_connectionString": {
+			"value": ""
+		},
+		"Ftp_Cascade_properties_typeProperties_host": {
+			"value": "www.tivoliservices.com"
+		},
+		"Ftp_Cascade_properties_typeProperties_userName": {
+			"value": "HRPayroll"
+		},
+		"TivoliKeys_properties_typeProperties_baseUrl": {
+			"value": "https://TivoliKeys.vault.azure.net/"
+		},
+		"WhenFileArrives_properties_typeProperties_scope": {
+			"value": "/subscriptions/5697a3d1-2163-4132-b12c-5e365b35ff40/resourceGroups/TivoliData/providers/Microsoft.Storage/storageAccounts/tivoli"
+		},
+		"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "tivoli.database.windows.net"
+		},
+		"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "TivoliAdmin"
+		},
+		"TivoliSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

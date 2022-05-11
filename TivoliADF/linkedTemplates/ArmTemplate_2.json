@@ -1,0 +1,1372 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "TivoliADF"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_tmpEmployee')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PayrollID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TopsID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Forename",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Surname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FullName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "KnownAs",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JobTitle",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StartDate",
+						"type": "date"
+					},
+					{
+						"name": "LeaveDate",
+						"type": "date"
+					},
+					{
+						"name": "Leave",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Email",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WorkType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Base",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContractType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TeamLeaderID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SupervisorID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AM_Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AOMAccount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Operations",
+						"type": "nvarchar"
+					},
+					{
+						"name": "gdnUsrID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DateAdded",
+						"type": "date"
+					},
+					{
+						"name": "LastUpdatedDate",
+						"type": "date"
+					},
+					{
+						"name": "DateDeleted",
+						"type": "date"
+					},
+					{
+						"name": "IsManager",
+						"type": "bit"
+					},
+					{
+						"name": "IsSupervisor",
+						"type": "bit"
+					},
+					{
+						"name": "IsTeamLeader",
+						"type": "bit"
+					},
+					{
+						"name": "QuoteApprovalLimit",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tmpEmployee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Reception')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Databases"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Reception_Cascade_Employee_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Employee Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Title",
+						"type": "varchar"
+					},
+					{
+						"name": "Firstname",
+						"type": "varchar"
+					},
+					{
+						"name": "Surname",
+						"type": "varchar"
+					},
+					{
+						"name": "Known As",
+						"type": "varchar"
+					},
+					{
+						"name": "Current Position",
+						"type": "varchar"
+					},
+					{
+						"name": "Hierarchy",
+						"type": "varchar"
+					},
+					{
+						"name": "Work Email",
+						"type": "varchar"
+					},
+					{
+						"name": "Driver",
+						"type": "varchar"
+					},
+					{
+						"name": "Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Cont  Service Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Start Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of Birth",
+						"type": "varchar"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Work Phone",
+						"type": "varchar"
+					},
+					{
+						"name": "Work Mobile Phone Number",
+						"type": "varchar"
+					},
+					{
+						"name": "Post Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Job Title",
+						"type": "varchar"
+					},
+					{
+						"name": "Contract",
+						"type": "varchar"
+					},
+					{
+						"name": "Grade",
+						"type": "varchar"
+					},
+					{
+						"name": "Pay Frequency",
+						"type": "varchar"
+					},
+					{
+						"name": "Project Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Skill Level",
+						"type": "varchar"
+					},
+					{
+						"name": "FTE",
+						"type": "varchar"
+					},
+					{
+						"name": "Hours",
+						"type": "varchar"
+					},
+					{
+						"name": "Basic Pay",
+						"type": "varchar"
+					},
+					{
+						"name": "Pay Basis",
+						"type": "varchar"
+					},
+					{
+						"name": "Fixed Term Contract End Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Hourly Rate",
+						"type": "varchar"
+					},
+					{
+						"name": "Works For",
+						"type": "varchar"
+					},
+					{
+						"name": "Left Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Last Working Day",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "Cascade",
+					"table": "Employee_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SW_Site_Data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Site Data",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "SW Data Tables 2022.xlsx",
+						"container": "tivoli-excel"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Site_ref",
+						"type": "String"
+					},
+					{
+						"name": "site",
+						"type": "String"
+					},
+					{
+						"name": "team",
+						"type": "String"
+					},
+					{
+						"name": "week",
+						"type": "String"
+					},
+					{
+						"name": "pcode",
+						"type": "String"
+					},
+					{
+						"name": "map",
+						"type": "String"
+					},
+					{
+						"name": "location",
+						"type": "String"
+					},
+					{
+						"name": "town",
+						"type": "String"
+					},
+					{
+						"name": "address",
+						"type": "String"
+					},
+					{
+						"name": "postcode",
+						"type": "String"
+					},
+					{
+						"name": "site_address",
+						"type": "String"
+					},
+					{
+						"name": "grid",
+						"type": "String"
+					},
+					{
+						"name": "latitude",
+						"type": "String"
+					},
+					{
+						"name": "longitude",
+						"type": "String"
+					},
+					{
+						"name": "dept_id",
+						"type": "String"
+					},
+					{
+						"name": "dept_desc",
+						"type": "String"
+					},
+					{
+						"name": "Dep level 3",
+						"type": "String"
+					},
+					{
+						"name": "Dep level 2",
+						"type": "String"
+					},
+					{
+						"name": "Dep level 1",
+						"type": "String"
+					},
+					{
+						"name": "SW_Manager",
+						"type": "String"
+					},
+					{
+						"name": "Contact",
+						"type": "String"
+					},
+					{
+						"name": "SW_Site_Contact",
+						"type": "String"
+					},
+					{
+						"name": "Site_Phone",
+						"type": "String"
+					},
+					{
+						"name": "function",
+						"type": "String"
+					},
+					{
+						"name": "grass_m",
+						"type": "String"
+					},
+					{
+						"name": "gras_freq",
+						"type": "String"
+					},
+					{
+						"name": "rough_m",
+						"type": "String"
+					},
+					{
+						"name": "rough_freq",
+						"type": "String"
+					},
+					{
+						"name": "shrub_m",
+						"type": "String"
+					},
+					{
+						"name": "shrub_freq",
+						"type": "String"
+					},
+					{
+						"name": "hedge_m",
+						"type": "String"
+					},
+					{
+						"name": "hedge_freq",
+						"type": "String"
+					},
+					{
+						"name": "hard_m",
+						"type": "String"
+					},
+					{
+						"name": "hard_freq",
+						"type": "String"
+					},
+					{
+						"name": "LitterLeaf_Freq",
+						"type": "String"
+					},
+					{
+						"name": "LitterLeaf_m",
+						"type": "String"
+					},
+					{
+						"name": "invasive_m",
+						"type": "String"
+					},
+					{
+						"name": "invasive_freq",
+						"type": "String"
+					},
+					{
+						"name": "Trees_Freq",
+						"type": "String"
+					},
+					{
+						"name": "Trees_m",
+						"type": "String"
+					},
+					{
+						"name": "Gullies_Freq",
+						"type": "String"
+					},
+					{
+						"name": "Gullies_m",
+						"type": "String"
+					},
+					{
+						"name": "Planters_Freq",
+						"type": "String"
+					},
+					{
+						"name": "Planters_m",
+						"type": "String"
+					},
+					{
+						"name": "SiteVisit_Freq",
+						"type": "String"
+					},
+					{
+						"name": "SiteVisit_m",
+						"type": "String"
+					},
+					{
+						"name": "risk",
+						"type": "String"
+					},
+					{
+						"name": "access",
+						"type": "String"
+					},
+					{
+						"name": "comments",
+						"type": "String"
+					},
+					{
+						"name": "r_manager",
+						"type": "String"
+					},
+					{
+						"name": "a_manager",
+						"type": "String"
+					},
+					{
+						"name": "tops_user",
+						"type": "String"
+					},
+					{
+						"name": "tos_account",
+						"type": "String"
+					},
+					{
+						"name": "DateAdded",
+						"type": "String"
+					},
+					{
+						"name": "DateModified",
+						"type": "String"
+					},
+					{
+						"name": "DateDeleted",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TivoliDW_db')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_activity_codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "activity_codes.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ActivityCode",
+						"type": "String"
+					},
+					{
+						"name": "ActivityName",
+						"type": "String"
+					},
+					{
+						"name": "ActivityCategory",
+						"type": "String"
+					},
+					{
+						"name": "ActivityType",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_managers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "managers.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "AreaCode",
+						"type": "String"
+					},
+					{
+						"name": "ManagerEmail",
+						"type": "String"
+					},
+					{
+						"name": "ManagerName",
+						"type": "String"
+					},
+					{
+						"name": "ManagerQuoteLimit",
+						"type": "String"
+					},
+					{
+						"name": "ManagerRegion",
+						"type": "String"
+					},
+					{
+						"name": "RMCode",
+						"type": "String"
+					},
+					{
+						"name": "TOPsID",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_project_codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "project_codes.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ProjectCode",
+						"type": "String"
+					},
+					{
+						"name": "ProjectName",
+						"type": "String"
+					},
+					{
+						"name": "ClientCode",
+						"type": "String"
+					},
+					{
+						"name": "ClientName",
+						"type": "String"
+					},
+					{
+						"name": "ManagerCode",
+						"type": "String"
+					},
+					{
+						"name": "ManagerName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_regional_directors')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "regional_directors.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "RegionalDirectorCode",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorEmail",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorName",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorPOLimit",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorQuoteLimit",
+						"type": "String"
+					},
+					{
+						"name": "RDCode",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorRegion",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_regional_managers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "regional_managers.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "RegionalManagerCode",
+						"type": "String"
+					},
+					{
+						"name": "RegionalManagerEmail",
+						"type": "String"
+					},
+					{
+						"name": "RegionalManagerName",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorCode",
+						"type": "String"
+					},
+					{
+						"name": "RegionalDirectorRegion",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_suppliers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "suppliers.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "SupplierEmail",
+						"type": "String"
+					},
+					{
+						"name": "SupplierName",
+						"type": "String"
+					},
+					{
+						"name": "SupplierPostcode",
+						"type": "String"
+					},
+					{
+						"name": "SupplierCode",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cds_workstages')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "workstages.csv",
+						"container": "tivoli-cds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Workstage",
+						"type": "String"
+					},
+					{
+						"name": "WorkstageDescription",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/employee_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Employees.csv",
+						"container": "tivoli-topsdatabase"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "payroll",
+						"type": "String"
+					},
+					{
+						"name": "tops",
+						"type": "String"
+					},
+					{
+						"name": "forename",
+						"type": "String"
+					},
+					{
+						"name": "surname",
+						"type": "String"
+					},
+					{
+						"name": "lowercase",
+						"type": "String"
+					},
+					{
+						"name": "know as",
+						"type": "String"
+					},
+					{
+						"name": "job",
+						"type": "String"
+					},
+					{
+						"name": "start",
+						"type": "String"
+					},
+					{
+						"name": "leave",
+						"type": "String"
+					},
+					{
+						"name": "leave_date",
+						"type": "String"
+					},
+					{
+						"name": "email",
+						"type": "String"
+					},
+					{
+						"name": "work_type",
+						"type": "String"
+					},
+					{
+						"name": "base",
+						"type": "String"
+					},
+					{
+						"name": "pcode",
+						"type": "String"
+					},
+					{
+						"name": "p_name",
+						"type": "String"
+					},
+					{
+						"name": "c_name",
+						"type": "String"
+					},
+					{
+						"name": "operations",
+						"type": "String"
+					},
+					{
+						"name": "teaml",
+						"type": "String"
+					},
+					{
+						"name": "super",
+						"type": "String"
+					},
+					{
+						"name": "manager",
+						"type": "String"
+					},
+					{
+						"name": "am_code",
+						"type": "String"
+					},
+					{
+						"name": "region",
+						"type": "String"
+					},
+					{
+						"name": "topsac",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posys_suppliers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SupplierEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierPostcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Address1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "Suppliers"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_activity_codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ActivityCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityCategory",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ActivityType",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "ActivityCodes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_managers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "AreaCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerQuoteLimit",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagerRegion",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RMCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TOPsID",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "Managers"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_project_codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "ProjectCodes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_regional_directors')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RegionalDirectorCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorPOLimit",
+						"type": "decimal",
+						"precision": 28,
+						"scale": 6
+					},
+					{
+						"name": "RegionalDirectorQuoteLimit",
+						"type": "decimal",
+						"precision": 28,
+						"scale": 6
+					},
+					{
+						"name": "RDCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionalDirectorRegion",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "RegionalDirectors"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_regional_managers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RegionalManagerCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionalManagerEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalManagerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionalDirectorRegion",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "RegionalManagers"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_suppliers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SupplierEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierPostcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupplierCode",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "Suppliers"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
