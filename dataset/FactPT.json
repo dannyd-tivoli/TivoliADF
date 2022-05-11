@@ -48,11 +48,6 @@
 				"precision": 10
 			},
 			{
-				"name": "TransactionDateID",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "DocumentDateID",
 				"type": "int",
 				"precision": 10
@@ -88,14 +83,6 @@
 			},
 			{
 				"name": "SourceReference",
-				"type": "nvarchar"
-			},
-			{
-				"name": "OrderReference",
-				"type": "nvarchar"
-			},
-			{
-				"name": "OriginReference",
 				"type": "nvarchar"
 			},
 			{
