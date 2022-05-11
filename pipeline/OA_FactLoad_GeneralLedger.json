@@ -88,7 +88,20 @@
 			{
 				"name": "CurrentDate",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Load OA Fact GL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Load OA Fact PT",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "_CurrentDate",
@@ -99,15 +112,9 @@
 				}
 			},
 			{
-				"name": "UpdateLastRunDate",
+				"name": "UpdateLastRunDate_GL",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
-					{
-						"activity": "Load OA Fact GL",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
 					{
 						"activity": "CurrentDate",
 						"dependencyConditions": [
@@ -162,6 +169,80 @@
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load OA Fact PT",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Dim Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "oa_fact_ProjectTransactions_df",
+						"type": "DataFlowReference",
+						"parameters": {
+							"LastRunDate": "\"2022-05-09 00:00:00\""
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "UpdateLastRunDate_PT",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "CurrentDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[System].[sp_UpdateLastRunDateTime]",
+					"storedProcedureParameters": {
+						"LastRunDate": {
+							"value": {
+								"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"Setting": {
+							"value": "oa_pctrans",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
