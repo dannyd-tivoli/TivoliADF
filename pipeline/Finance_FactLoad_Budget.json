@@ -294,7 +294,7 @@
 					"storedProcedureName": "[DW].[sp_FactBudget_Insert]",
 					"storedProcedureParameters": {
 						"BudgetName": {
-							"value": "",
+							"value": "New budget",
 							"type": "String"
 						}
 					}
