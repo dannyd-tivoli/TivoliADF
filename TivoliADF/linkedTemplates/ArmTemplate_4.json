@@ -343,7 +343,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "Move data from Finance spreadsheet to Staging table",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -365,8 +365,10 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE Finance.Budget_Staging",
 								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {
@@ -610,6 +612,39 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Populate Dim and Fact Budget tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Move data from Finance spreadsheet to Staging table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_FactBudget_Insert]",
+							"storedProcedureParameters": {
+								"BudgetName": {
+									"value": "",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -6581,8 +6616,7 @@
 									"Customer": {},
 									"Supplier": {},
 									"FactSync": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -6724,8 +6758,7 @@
 									"WorkStage": {},
 									"Project": {},
 									"FactSync": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -6821,7 +6854,7 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "_LastRunDateTime_GL",
+							"variableName": "_LastRunDateTime_PT",
 							"value": {
 								"value": "@formatDateTime(activity('LastRunDate_PT').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
 								"type": "Expression"
