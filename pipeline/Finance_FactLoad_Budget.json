@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Move data from Finance spreadsheet to Staging table",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -25,8 +25,10 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE Finance.Budget_Staging",
 						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -268,6 +270,39 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Populate Dim and Fact Budget tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Move data from Finance spreadsheet to Staging table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DW].[sp_FactBudget_Insert]",
+					"storedProcedureParameters": {
+						"BudgetName": {
+							"value": "",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
