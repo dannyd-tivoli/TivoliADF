@@ -63,9 +63,6 @@
 					"name": "AlterRowSettings"
 				},
 				{
-					"name": "ActivityCodeLookup"
-				},
-				{
 					"name": "WorkStageLookup"
 				},
 				{
@@ -75,7 +72,7 @@
 					"name": "SupplierLookup"
 				},
 				{
-					"name": "lookup1"
+					"name": "ActivityCodeLookup"
 				}
 			],
 			"scriptLines": [
@@ -229,21 +226,15 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> Staging",
 				"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
-				"lookup1, ActivityCode lookup(ActivityCode == ActivityCode@ActivityCode",
-				"     && OrderDate >= ActivityCode@FromDate",
-				"     && docdate <= ActivityCode@ToDate,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'right')~> ActivityCodeLookup",
-				"ActivityCodeLookup, WorkStage lookup(workstage == WorkStageCode",
-				"     && docdate >= WorkStage@FromDate",
-				"     && docdate <= WorkStage@ToDate,",
+				"ActivityCodeLookup, WorkStage lookup(Workstage == WorkStageCode",
+				"     && OrderDate >= WorkStage@FromDate",
+				"     && OrderDate <= WorkStage@ToDate,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'right')~> WorkStageLookup",
-				"WorkStageLookup, Project lookup(project == ProjectCode",
-				"     && docdate >= Project@FromDate",
-				"     && docdate <= Project@ToDate,",
+				"WorkStageLookup, Project lookup(Project == ProjectCode",
+				"     && OrderDate >= Project@FromDate",
+				"     && OrderDate <= Project@ToDate,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'right')~> ProjectLookup",
@@ -258,7 +249,7 @@
 				"     && OrderDate <= ActivityCode@ToDate,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
+				"     broadcast: 'auto')~> ActivityCodeLookup",
 				"AlterRowSettings sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
