@@ -339,7 +339,7 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "_LastRunDaatetime_PO",
+					"variableName": "_LastRunDateTime_PO",
 					"value": {
 						"value": "@formatDateTime(activity('LastRunDate_PO').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
 						"type": "Expression"
@@ -434,7 +434,7 @@
 			"_LastRunDateTime_PT": {
 				"type": "String"
 			},
-			"_LastRunDaatetime_PO": {
+			"_LastRunDateTime_PO": {
 				"type": "String"
 			}
 		},
