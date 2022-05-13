@@ -261,7 +261,7 @@
 				"scale": 5
 			},
 			{
-				"name": "LastModifedDataTime",
+				"name": "LastModifiedDataTime",
 				"type": "datetime2",
 				"scale": 7
 			}
