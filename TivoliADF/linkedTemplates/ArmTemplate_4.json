@@ -7105,7 +7105,8 @@
 									"Customer": {},
 									"Supplier": {},
 									"FactSync": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
@@ -7349,6 +7350,146 @@
 								"type": "Expression"
 							}
 						}
+					},
+					{
+						"name": "LastRunDate_PO",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Dim Pipeline",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'oa_podetail'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set _LastDateTime_PO",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "LastRunDate_PO",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "_LastRunDateTime_PO",
+							"value": {
+								"value": "@formatDateTime(activity('LastRunDate_PO').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Load OA Fact PO",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Set _LastDateTime_PO",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "oa_fact_PurchaseOrder_df",
+								"type": "DataFlowReference",
+								"parameters": {
+									"LastRunDate": {
+										"value": "'@{variables('_LastRunDateTime_PO')}'",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"podetail": {},
+									"Supplier": {},
+									"ActivityCode": {},
+									"WorkStage": {},
+									"Project": {},
+									"FactSync": {}
+								},
+								"linkedServiceParameters": {}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "UpdateLastRunDate_PO",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Load OA Fact PO",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[System].[sp_UpdateLastRunDateTime]",
+							"storedProcedureParameters": {
+								"LastRunDate": {
+									"value": {
+										"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"Setting": {
+									"value": "oa_podetail",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -7364,6 +7505,9 @@
 					},
 					"_LastRunDateTime_PT": {
 						"type": "String"
+					},
+					"_LastRunDateTime_PO": {
+						"type": "String"
 					}
 				},
 				"folder": {
@@ -7374,7 +7518,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/oa_fact_GeneralLedger_df')]",
-				"[concat(variables('factoryId'), '/dataflows/oa_fact_ProjectTransactions_df')]"
+				"[concat(variables('factoryId'), '/dataflows/oa_fact_ProjectTransactions_df')]",
+				"[concat(variables('factoryId'), '/dataflows/oa_fact_PurchaseOrder_df')]"
 			]
 		},
 		{

@@ -386,7 +386,20 @@
 					{
 						"name": "DimProject",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "DimCostCentre",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "DimCustomer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
