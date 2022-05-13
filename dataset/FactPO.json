@@ -1,0 +1,274 @@
+{
+	"name": "FactPO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TiviliDW_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ActivityCodeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SupplierID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProjectID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WorkstageID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OrderDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RevDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CreatedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CreatedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DueDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EndDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "MatchDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AmendmentDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OrderNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OrderReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderValue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "OrderStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DeliveryPostCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Branch",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OutstandingValue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "CustomerReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CurrencyCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CurrencyRate",
+				"type": "decimal",
+				"precision": 21,
+				"scale": 6
+			},
+			{
+				"name": "OrderBaseValue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "OrderBaseOutstanding",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "Period",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RequestedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DeliveryAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "InvoiceAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderPostCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LineNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LineTotal",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "Price",
+				"type": "decimal",
+				"precision": 17,
+				"scale": 5
+			},
+			{
+				"name": "Discount",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "Quantity",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "OutStandingTotal",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "ItemDescription",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Units",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VatCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OutstandingQty",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "LineStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AllocatedQty",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "DispatchedQty",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "UnderPickedQty",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 3
+			},
+			{
+				"name": "NewPrice",
+				"type": "decimal",
+				"precision": 17,
+				"scale": 5
+			},
+			{
+				"name": "BaseValue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "BaseValueOutstanding",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "BasePrice",
+				"type": "decimal",
+				"precision": 17,
+				"scale": 5
+			},
+			{
+				"name": "LastModifedDataTime",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "DW",
+			"table": "FactPurchaseOrder"
+		}
+	}
+}
