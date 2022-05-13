@@ -1,5 +1,5 @@
 {
-	"name": "OA_FactLoad_GeneralLedger",
+	"name": "OA_FactLoad_PL",
 	"properties": {
 		"description": "GL Data from Open Accounts",
 		"activities": [
@@ -159,7 +159,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "OA_DimLoad",
+						"referenceName": "OA_DimLoad_PL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
