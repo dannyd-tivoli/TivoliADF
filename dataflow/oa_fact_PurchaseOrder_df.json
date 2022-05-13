@@ -26,20 +26,6 @@
 						"referenceName": "TivoliDW_db",
 						"type": "DatasetReference"
 					},
-					"name": "DocumentType"
-				},
-				{
-					"dataset": {
-						"referenceName": "TivoliDW_db",
-						"type": "DatasetReference"
-					},
-					"name": "TransactionType"
-				},
-				{
-					"dataset": {
-						"referenceName": "TivoliDW_db",
-						"type": "DatasetReference"
-					},
 					"name": "ActivityCode"
 				},
 				{
@@ -86,7 +72,10 @@
 					"name": "ProjectLookup"
 				},
 				{
-					"name": "Supplierx"
+					"name": "SupplierLookup"
+				},
+				{
+					"name": "lookup1"
 				}
 			],
 			"scriptLines": [
@@ -166,25 +155,6 @@
 				"     query: 'SELECT  [SupplierID]\\n      ,[SupplierCode]\\n      ,[FromDate]\\n      ,[ToDate]\\n  FROM [DW].[DimSupplier]',",
 				"     format: 'query') ~> Supplier",
 				"source(output(",
-				"          DocumentTypeID as integer,",
-				"          DocID as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT [DocumentTypeID]\\n      ,[DocID]\\n  FROM [DW].[DimDocumentType]',",
-				"     format: 'query') ~> DocumentType",
-				"source(output(",
-				"          TransactionTypeID as integer,",
-				"          trtyp as string,",
-				"          LedgerCode as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT[TransactionTypeID]\\n      ,[trtyp], [LedgerCode]\\n  FROM [DW].[DimTransactionType]',",
-				"     format: 'query') ~> TransactionType",
-				"source(output(",
 				"          ActivityCodeID as integer,",
 				"          ActivityCode as string,",
 				"          FromDate as date,",
@@ -221,7 +191,7 @@
 				"          NewDocumentID = iif(isNull(DocumentTypeID), -1, DocumentTypeID),",
 				"          NewTransactionTypeID = iif(isNull(TransactionTypeID), -1, TransactionTypeID),",
 				"          LastModifiedDate = currentUTC('GMT'),",
-				"          NewActivityCodeID = iif(isNull(ActivityCodeID), -1, ActivityCodeID),",
+				"          NewActivityCodeID = iif(isNull(ActivityCode@ActivityCodeID), -1, ActivityCode@ActivityCodeID),",
 				"          DocumentDateID = toInteger(toString(docdate, 'yyyyMMdd')),",
 				"          InputDateID = toInteger(toString(inputdate, 'yyyyMMdd')),",
 				"          YearNo = toInteger(yearno),",
@@ -259,8 +229,8 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> Staging",
 				"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
-				"Supplierx, ActivityCode lookup(expensecode == ActivityCode@ActivityCode",
-				"     && docdate >= ActivityCode@FromDate",
+				"lookup1, ActivityCode lookup(ActivityCode == ActivityCode@ActivityCode",
+				"     && OrderDate >= ActivityCode@FromDate",
 				"     && docdate <= ActivityCode@ToDate,",
 				"     multiple: false,",
 				"     pickup: 'any',",
@@ -282,7 +252,13 @@
 				"     && OrderDate <= ToDate,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'right')~> Supplierx",
+				"     broadcast: 'right')~> SupplierLookup",
+				"SupplierLookup, ActivityCode lookup(podetail@ActivityCode == ActivityCode@ActivityCode",
+				"     && OrderDate >= ActivityCode@FromDate",
+				"     && OrderDate <= ActivityCode@ToDate,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
 				"AlterRowSettings sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
