@@ -304,6 +304,7 @@
 				"          OrderStatus as string,",
 				"          DeliveryPostCode as string,",
 				"          Branch as string,",
+				"          RecordType as string,",
 				"          OutstandingValue as decimal(18,2),",
 				"          CustomerReference as string,",
 				"          CurrencyCode as string,",
@@ -335,13 +336,13 @@
 				"          BaseValue as decimal(18,2),",
 				"          BaseValueOutstanding as decimal(18,2),",
 				"          BasePrice as decimal(17,5),",
-				"          LastModifiedDataTime as timestamp",
+				"          LastModifiedDateTime as timestamp",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:true,",
-				"     keys:['Branch','RecordType','OrderNumber','LineNo'],",
+				"     keys:['Branch','OrderNumber','LineNo'],",
 				"     format: 'table',",
 				"     batchSize: 10000,",
 				"     skipDuplicateMapInputs: true,",
@@ -396,8 +397,7 @@
 				"          NewPrice,",
 				"          BaseValue,",
 				"          BaseValueOutstanding,",
-				"          BasePrice,",
-				"          LastModifiedDataTime = LastModifiedDateTime",
+				"          BasePrice",
 				"     )) ~> FactSync"
 			]
 		}

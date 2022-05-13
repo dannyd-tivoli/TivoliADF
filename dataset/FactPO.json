@@ -101,6 +101,10 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "RecordType",
+				"type": "nvarchar"
+			},
+			{
 				"name": "OutstandingValue",
 				"type": "decimal",
 				"precision": 18,
@@ -261,7 +265,7 @@
 				"scale": 5
 			},
 			{
-				"name": "LastModifiedDataTime",
+				"name": "LastModifiedDateTime",
 				"type": "datetime2",
 				"scale": 7
 			}
