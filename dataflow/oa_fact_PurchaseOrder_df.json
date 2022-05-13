@@ -342,7 +342,7 @@
 				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:true,",
-				"     keys:['Branch','OrderNumber','LineNo'],",
+				"     keys:['Branch','RecordType','OrderNumber','LineNo'],",
 				"     format: 'table',",
 				"     batchSize: 10000,",
 				"     skipDuplicateMapInputs: true,",
@@ -367,6 +367,7 @@
 				"          OrderStatus,",
 				"          DeliveryPostCode,",
 				"          Branch,",
+				"          RecordType,",
 				"          OutstandingValue,",
 				"          CustomerReference,",
 				"          CurrencyCode,",
@@ -397,7 +398,8 @@
 				"          NewPrice,",
 				"          BaseValue,",
 				"          BaseValueOutstanding,",
-				"          BasePrice",
+				"          BasePrice,",
+				"          LastModifiedDateTime",
 				"     )) ~> FactSync"
 			]
 		}
