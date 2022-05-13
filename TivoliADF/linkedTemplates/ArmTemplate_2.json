@@ -13,6 +13,77 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_TempTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "machinetype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "make",
+						"type": "nvarchar"
+					},
+					{
+						"name": "model",
+						"type": "nvarchar"
+					},
+					{
+						"name": "noiseleveldecibles",
+						"type": "nvarchar"
+					},
+					{
+						"name": "bookmagnitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "wearandtearallowance",
+						"type": "nvarchar"
+					},
+					{
+						"name": "actualvibrationmagnitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exposurepointminsperhour",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timetoreacheav",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timetoreachelv",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exposuredurationtwa",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exposurepointsdailysinglemachine",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ffs"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SQL_Applications_tmpEmployee')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1327,43 +1398,6 @@
 				"typeProperties": {
 					"schema": "POSystem",
 					"table": "RegionalManagers"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/posystem_suppliers')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "SupplierEmail",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SupplierName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SupplierPostcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SupplierCode",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "POSystem",
-					"table": "Suppliers"
 				}
 			},
 			"dependsOn": []

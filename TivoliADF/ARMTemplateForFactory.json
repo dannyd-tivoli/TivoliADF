@@ -4736,7 +4736,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OA_DimLoad')]",
+			"name": "[concat(parameters('factoryName'), '/OA_DimLoad_PL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -4877,7 +4877,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OA_FactLoad_GeneralLedger')]",
+			"name": "[concat(parameters('factoryName'), '/OA_FactLoad_PL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -5051,7 +5051,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "OA_DimLoad",
+								"referenceName": "OA_DimLoad_PL",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -5225,7 +5225,7 @@
 				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
 				"[concat(variables('factoryId'), '/dataflows/oa_fact_GeneralLedger_df')]",
 				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]",
-				"[concat(variables('factoryId'), '/pipelines/OA_DimLoad')]",
+				"[concat(variables('factoryId'), '/pipelines/OA_DimLoad_PL')]",
 				"[concat(variables('factoryId'), '/dataflows/oa_fact_ProjectTransactions_df')]"
 			]
 		},
@@ -8215,6 +8215,289 @@
 				"typeProperties": {
 					"schema": "DW",
 					"table": "FactGeneralLedger"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactPO')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ActivityCodeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SupplierID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProjectID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WorkstageID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OrderDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RevDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CreatedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CreatedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DueDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EndDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MatchDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AmendmentDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OrderNumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OrderReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "OrderStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DeliveryPostCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Branch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RecordType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OutstandingValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "CustomerReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CurrencyCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CurrencyRate",
+						"type": "decimal",
+						"precision": 21,
+						"scale": 6
+					},
+					{
+						"name": "OrderBaseValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "OrderBaseOutstanding",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Period",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RequestedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DeliveryAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InvoiceAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OrderPostCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LineNo",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LineTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Price",
+						"type": "decimal",
+						"precision": 17,
+						"scale": 5
+					},
+					{
+						"name": "Discount",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Quantity",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "OutStandingTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "ItemDescription",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Units",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VatCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OutstandingQty",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "LineStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AllocatedQty",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "DispatchedQty",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "UnderPickedQty",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "NewPrice",
+						"type": "decimal",
+						"precision": 17,
+						"scale": 5
+					},
+					{
+						"name": "BaseValue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "BaseValueOutstanding",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "BasePrice",
+						"type": "decimal",
+						"precision": 17,
+						"scale": 5
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactPurchaseOrder"
 				}
 			},
 			"dependsOn": [
@@ -13249,6 +13532,418 @@
 				"[concat(variables('factoryId'), '/datasets/Reception_db')]",
 				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
 				"[concat(variables('factoryId'), '/datasets/FactPT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oa_fact_PurchaseOrder_df')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Tivoli Data Warehouse"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Reception_db",
+								"type": "DatasetReference"
+							},
+							"name": "podetail"
+						},
+						{
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference"
+							},
+							"name": "Supplier"
+						},
+						{
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference"
+							},
+							"name": "ActivityCode"
+						},
+						{
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference"
+							},
+							"name": "WorkStage"
+						},
+						{
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference"
+							},
+							"name": "Project"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "FactPO",
+								"type": "DatasetReference"
+							},
+							"name": "FactSync"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumns"
+						},
+						{
+							"name": "Staging"
+						},
+						{
+							"name": "AlterRowSettings"
+						},
+						{
+							"name": "WorkStageLookup"
+						},
+						{
+							"name": "ProjectLookup"
+						},
+						{
+							"name": "SupplierLookup"
+						},
+						{
+							"name": "ActivityCodeLookup"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     LastRunDate as string (\"2022-05-09 00:00:00\")",
+						"}",
+						"source(output(",
+						"          OrderNumber as integer,",
+						"          OrderReference as string,",
+						"          SupplierCode as string,",
+						"          OrderDate as date,",
+						"          RevDate as date,",
+						"          OrderValue as decimal(17,2),",
+						"          CreatedDate as date,",
+						"          OrderStatus as string,",
+						"          DeliveryPostCode as string,",
+						"          Branch as string,",
+						"          RecordType as string,",
+						"          OutstandingValue as decimal(17,2),",
+						"          CustomerReference as string,",
+						"          CurrencyCode as string,",
+						"          CurrencyRate as decimal(21,6),",
+						"          OrderBaseValue as decimal(17,2),",
+						"          OrderBaseOutstanding as decimal(17,2),",
+						"          Period as integer,",
+						"          Year as string,",
+						"          CreatedTimeID as integer,",
+						"          EndDate as date,",
+						"          RequestedBy as string,",
+						"          DeliveryAddress as string,",
+						"          InvoiceAddress as string,",
+						"          OrderAddress as string,",
+						"          OrderPostCode as string,",
+						"          MatchDate as date,",
+						"          LineNo as integer,",
+						"          LineTotal as decimal(17,2),",
+						"          Price as decimal(17,5),",
+						"          Discount as decimal(17,2),",
+						"          Quantity as decimal(18,3),",
+						"          OutStandingTotal as decimal(17,2),",
+						"          ItemDescription as string,",
+						"          Units as string,",
+						"          VatCode as string,",
+						"          ActivityCode as string,",
+						"          OutstandingQty as decimal(18,3),",
+						"          LineStatus as string,",
+						"          AllocatedQty as decimal(18,3),",
+						"          DispatchedQty as decimal(18,3),",
+						"          UnderPickedQty as decimal(18,3),",
+						"          NewPrice as decimal(17,5),",
+						"          BaseValue as decimal(17,2),",
+						"          BaseValueOutstanding as decimal(17,2),",
+						"          DueDate as date,",
+						"          BasePrice as decimal(17,5),",
+						"          Project as string,",
+						"          AmendmentDate as date,",
+						"          Workstage as string,",
+						"          OALastModifiedDateTime as string,",
+						"          UpdatedDateTime as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     inputs:['@LastModifedDate' -> ($LastRunDate)],",
+						"     procedureName: 'sp_oa_podetail_DW',",
+						"     schemaName: 'dbo',",
+						"     resultSet: true,",
+						"     format: 'procedure') ~> podetail",
+						"source(output(",
+						"          SupplierID as integer,",
+						"          SupplierCode as string,",
+						"          FromDate as date,",
+						"          ToDate as date",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT  [SupplierID]\\n      ,[SupplierCode]\\n      ,[FromDate]\\n      ,[ToDate]\\n  FROM [DW].[DimSupplier]',",
+						"     format: 'query') ~> Supplier",
+						"source(output(",
+						"          ActivityCodeID as integer,",
+						"          ActivityCode as string,",
+						"          FromDate as date,",
+						"          ToDate as date",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [ActivityCodeID]\\n      ,[ActivityCode]\\n      ,[FromDate]\\n      ,[ToDate]\\n  FROM [DW].[DimActivityCode]',",
+						"     format: 'query') ~> ActivityCode",
+						"source(output(",
+						"          WorkStageID as integer,",
+						"          WorkStageCode as string,",
+						"          FromDate as date,",
+						"          ToDate as date",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [WorkStageID]\\n      ,[WorkStageCode]\\n       ,[FromDate]\\n       ,[ToDate]\\n  FROM [DW].[DimWorkStage]',",
+						"     format: 'query') ~> WorkStage",
+						"source(output(",
+						"          ProjectID as integer,",
+						"          ProjectCode as string,",
+						"          FromDate as date,",
+						"          ToDate as date",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [ProjectID]\\n      ,[ProjectCode]\\n      ,[FromDate]\\n      ,[ToDate]\\n  FROM [DW].[DimProject]',",
+						"     format: 'query') ~> Project",
+						"ProjectLookup derive(NewSupplierID = iif(isNull(SupplierID), -1,SupplierID),",
+						"          NewActivityCodeID = iif(isNull(ActivityCodeID), -1, ActivityCodeID),",
+						"          LastModifiedDateTime = currentUTC('GMT'),",
+						"          Period = toInteger(Period),",
+						"          NewWorkStageID = iif(isNull(WorkStageID), -1, WorkStageID),",
+						"          NewProjectID = iif(isNull(ProjectID), -1, ProjectID),",
+						"          OrderDateID = toInteger(toString(OrderDate, 'yyyyMMdd')),",
+						"          REvDateID = toInteger(toString(RevDate, 'yyyyMMdd')),",
+						"          CreatedDateID = toInteger(toString(CreatedDate, 'yyyyMMdd')),",
+						"          MatchDateID = toInteger(toString(MatchDate, 'yyyyMMdd')),",
+						"          DueDateID = toInteger(toString(DueDate, 'yyyyMMdd')),",
+						"          AmendmentDateID = toInteger(toString(AmendmentDate, 'yyyyMMdd')),",
+						"          EndDateID = toInteger(toString(EndDate, 'yyyyMMdd'))) ~> DerivedColumns",
+						"DerivedColumns select(mapColumn(",
+						"          OrderNumber,",
+						"          OrderReference,",
+						"          OrderValue,",
+						"          OrderStatus,",
+						"          DeliveryPostCode,",
+						"          Branch,",
+						"          RecordType,",
+						"          OutstandingValue,",
+						"          CustomerReference,",
+						"          CurrencyCode,",
+						"          CurrencyRate,",
+						"          OrderBaseValue,",
+						"          OrderBaseOutstanding,",
+						"          Period,",
+						"          Year,",
+						"          CreatedTimeID,",
+						"          RequestedBy,",
+						"          DeliveryAddress,",
+						"          InvoiceAddress,",
+						"          OrderAddress,",
+						"          OrderPostCode,",
+						"          MatchDate,",
+						"          LineNo,",
+						"          LineTotal,",
+						"          Price,",
+						"          Discount,",
+						"          Quantity,",
+						"          OutStandingTotal,",
+						"          ItemDescription,",
+						"          Units,",
+						"          VatCode,",
+						"          OutstandingQty,",
+						"          LineStatus,",
+						"          AllocatedQty,",
+						"          DispatchedQty,",
+						"          UnderPickedQty,",
+						"          NewPrice,",
+						"          BaseValue,",
+						"          BaseValueOutstanding,",
+						"          BasePrice,",
+						"          Project,",
+						"          SupplierID = NewSupplierID,",
+						"          ActivityCodeID = NewActivityCodeID,",
+						"          WorkStageID = NewWorkStageID,",
+						"          ProjectID = NewProjectID,",
+						"          OrderDateID,",
+						"          REvDateID,",
+						"          CreatedDateID,",
+						"          MatchDateID,",
+						"          DueDateID,",
+						"          AmendmentDateID,",
+						"          EndDateID,",
+						"          LastModifiedDateTime",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Staging",
+						"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
+						"ActivityCodeLookup, WorkStage lookup(Workstage == WorkStageCode",
+						"     && OrderDate >= WorkStage@FromDate",
+						"     && OrderDate <= WorkStage@ToDate,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'right')~> WorkStageLookup",
+						"WorkStageLookup, Project lookup(Project == ProjectCode",
+						"     && OrderDate >= Project@FromDate",
+						"     && OrderDate <= Project@ToDate,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'right')~> ProjectLookup",
+						"podetail, Supplier lookup(podetail@SupplierCode == Supplier@SupplierCode",
+						"     && OrderDate >= FromDate",
+						"     && OrderDate <= ToDate,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'right')~> SupplierLookup",
+						"SupplierLookup, ActivityCode lookup(podetail@ActivityCode == ActivityCode@ActivityCode",
+						"     && OrderDate >= ActivityCode@FromDate",
+						"     && OrderDate <= ActivityCode@ToDate,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'right')~> ActivityCodeLookup",
+						"AlterRowSettings sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as integer,",
+						"          ActivityCodeID as integer,",
+						"          SupplierID as integer,",
+						"          ProjectID as integer,",
+						"          WorkstageID as integer,",
+						"          OrderDateID as integer,",
+						"          RevDateID as integer,",
+						"          CreatedDateID as integer,",
+						"          CreatedTimeID as integer,",
+						"          DueDateID as integer,",
+						"          EndDateID as integer,",
+						"          MatchDateID as integer,",
+						"          AmendmentDateID as integer,",
+						"          OrderNumber as integer,",
+						"          OrderReference as string,",
+						"          OrderValue as decimal(18,2),",
+						"          OrderStatus as string,",
+						"          DeliveryPostCode as string,",
+						"          Branch as string,",
+						"          RecordType as string,",
+						"          OutstandingValue as decimal(18,2),",
+						"          CustomerReference as string,",
+						"          CurrencyCode as string,",
+						"          CurrencyRate as decimal(21,6),",
+						"          OrderBaseValue as decimal(18,2),",
+						"          OrderBaseOutstanding as decimal(18,2),",
+						"          Period as integer,",
+						"          Year as string,",
+						"          RequestedBy as string,",
+						"          DeliveryAddress as string,",
+						"          InvoiceAddress as string,",
+						"          OrderAddress as string,",
+						"          OrderPostCode as string,",
+						"          LineNo as integer,",
+						"          LineTotal as decimal(18,2),",
+						"          Price as decimal(17,5),",
+						"          Discount as decimal(18,2),",
+						"          Quantity as decimal(18,3),",
+						"          OutStandingTotal as decimal(18,2),",
+						"          ItemDescription as string,",
+						"          Units as string,",
+						"          VatCode as string,",
+						"          OutstandingQty as decimal(18,3),",
+						"          LineStatus as string,",
+						"          AllocatedQty as decimal(18,3),",
+						"          DispatchedQty as decimal(18,3),",
+						"          UnderPickedQty as decimal(18,3),",
+						"          NewPrice as decimal(17,5),",
+						"          BaseValue as decimal(18,2),",
+						"          BaseValueOutstanding as decimal(18,2),",
+						"          BasePrice as decimal(17,5),",
+						"          LastModifiedDateTime as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['Branch','RecordType','OrderNumber','LineNo'],",
+						"     format: 'table',",
+						"     batchSize: 10000,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ActivityCodeID,",
+						"          SupplierID,",
+						"          ProjectID,",
+						"          WorkstageID = WorkStageID,",
+						"          OrderDateID,",
+						"          RevDateID = REvDateID,",
+						"          CreatedDateID,",
+						"          CreatedTimeID,",
+						"          DueDateID,",
+						"          EndDateID,",
+						"          MatchDateID,",
+						"          AmendmentDateID,",
+						"          OrderNumber,",
+						"          OrderReference,",
+						"          OrderValue,",
+						"          OrderStatus,",
+						"          DeliveryPostCode,",
+						"          Branch,",
+						"          RecordType,",
+						"          OutstandingValue,",
+						"          CustomerReference,",
+						"          CurrencyCode,",
+						"          CurrencyRate,",
+						"          OrderBaseValue,",
+						"          OrderBaseOutstanding,",
+						"          Period,",
+						"          Year,",
+						"          RequestedBy,",
+						"          DeliveryAddress,",
+						"          InvoiceAddress,",
+						"          OrderAddress,",
+						"          OrderPostCode,",
+						"          LineNo,",
+						"          LineTotal,",
+						"          Price,",
+						"          Discount,",
+						"          Quantity,",
+						"          OutStandingTotal,",
+						"          ItemDescription,",
+						"          Units,",
+						"          VatCode,",
+						"          OutstandingQty,",
+						"          LineStatus,",
+						"          AllocatedQty,",
+						"          DispatchedQty,",
+						"          UnderPickedQty,",
+						"          NewPrice,",
+						"          BaseValue,",
+						"          BaseValueOutstanding,",
+						"          BasePrice,",
+						"          LastModifiedDateTime",
+						"     )) ~> FactSync"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Reception_db')]",
+				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
+				"[concat(variables('factoryId'), '/datasets/FactPO')]"
 			]
 		}
 	]
