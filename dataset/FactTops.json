@@ -1,0 +1,167 @@
+{
+	"name": "FactTops",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TiviliDW_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AOMGroupID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DateAddedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeAddedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LastModifiedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LastModifiedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "JobID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Reference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DateCreatedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeCreatedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DateModifiedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeModifiedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DispatchDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DueDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CurrentStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CompletedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IsCompleted",
+				"type": "bit"
+			},
+			{
+				"name": "DateCompletedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeCompletedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Latitude",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Longitude",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ManagerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SupervisorName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TeamLeaderName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ApprovalStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ApprovalDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ApprovalTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ApprovedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ApprovalComments",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TemplateName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastModifiedDateTime",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "DW",
+			"table": "FactTopsJob"
+		}
+	}
+}
