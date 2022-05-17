@@ -49,7 +49,7 @@
 					"name": "AlterRowSettings"
 				},
 				{
-					"name": "select1"
+					"name": "SelectFields"
 				},
 				{
 					"name": "AlterRow1"
@@ -160,8 +160,8 @@
 				"          Deleted",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 alterRow(upsertIf(true())) ~> AlterRow1",
+				"     skipDuplicateMapOutputs: true) ~> SelectFields",
+				"SelectFields alterRow(upsertIf(true())) ~> AlterRow1",
 				"AlterRowSettings sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
