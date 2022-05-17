@@ -472,6 +472,49 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AOMGroup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GroupReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GroupCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GroupName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Deleted",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "DimAOMGroup"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Applications_POSystem_OAProjectCodesCombined_FromOA')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -753,35 +796,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Ftp_Cascade')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_Reception_Budget')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "TivoliBlob",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Excel"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Sheet1",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Budget & FC - Upload - Activity Code.xlsx",
-						"container": "tivoli-excel"
-					},
-					"range": ""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TivoliBlob')]"
 			]
 		}
 	]

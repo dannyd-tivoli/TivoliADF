@@ -4736,161 +4736,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OA_DimLoad_PL')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DimActivityCode",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DW].[sp_DimActivityCode_Merge]"
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DimCostCentre",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DW].[sp_DimCostCentre_Merge]"
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DimCustomer",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DW].[sp_DimCustomer_Merge]"
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DimProject",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "DimCostCentre",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "DimCustomer",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DW].[sp_DimProject_Merge]"
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DimSupplier",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DW].[sp_DimSupplier_Merge]"
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "DimWorkStage",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[DW].[sp_DimWorkStage_Merge]"
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "Data Warehouse Pipelines"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-05-11T10:30:45Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OA_FactLoad_PL')]",
+			"name": "[concat(parameters('factoryName'), '/OA_DIMAndFactLoad_PL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -4967,8 +4813,7 @@
 									"Customer": {},
 									"Supplier": {},
 									"FactSync": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -5302,8 +5147,7 @@
 									"WorkStage": {},
 									"Project": {},
 									"FactSync": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -5352,6 +5196,140 @@
 							"referenceName": "TiviliDW_db",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "LastRunDate_Tops",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Dim Pipeline",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'tops_jobs'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set _LastDateTime_Tops",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "LastRunDate_Tops",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "_LastRunDateTime_PO",
+							"value": {
+								"value": "@formatDateTime(activity('LastRunDate_Tops').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Load Tops Fact",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Set _LastDateTime_Tops",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "AOM_Jobs_df",
+								"type": "DataFlowReference",
+								"parameters": {
+									"LastRunDate": "\"2022-05-09 00:00:00\""
+								},
+								"datasetParameters": {
+									"topsjobs": {},
+									"Groups": {},
+									"FactSync": {},
+									"DimAOMGroup": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "UpdateLastRunDate_Tops",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Load Tops Fact",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[System].[sp_UpdateLastRunDateTime]",
+							"storedProcedureParameters": {
+								"LastRunDate": {
+									"value": {
+										"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"Setting": {
+									"value": "tops_jobs",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -5370,6 +5348,9 @@
 					},
 					"_LastRunDateTime_PO": {
 						"type": "String"
+					},
+					"_LastRunDateTime_Tops": {
+						"type": "String"
 					}
 				},
 				"folder": {
@@ -5384,7 +5365,162 @@
 				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]",
 				"[concat(variables('factoryId'), '/pipelines/OA_DimLoad_PL')]",
 				"[concat(variables('factoryId'), '/dataflows/oa_fact_ProjectTransactions_df')]",
-				"[concat(variables('factoryId'), '/dataflows/oa_fact_PurchaseOrder_df')]"
+				"[concat(variables('factoryId'), '/dataflows/oa_fact_PurchaseOrder_df')]",
+				"[concat(variables('factoryId'), '/dataflows/AOM_Jobs_df')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OA_DimLoad_PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DimActivityCode",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_DimActivityCode_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "DimCostCentre",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_DimCostCentre_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "DimCustomer",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_DimCustomer_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "DimProject",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "DimCostCentre",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "DimCustomer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_DimProject_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "DimSupplier",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_DimSupplier_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "DimWorkStage",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[DW].[sp_DimWorkStage_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Data Warehouse Pipelines"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-05-11T10:30:45Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
 			]
 		},
 		{
@@ -7447,6 +7583,49 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AOMGroup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GroupReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GroupCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "GroupName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Deleted",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "DimAOMGroup"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Applications_POSystem_OAProjectCodesCombined_FromOA')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -8802,6 +8981,178 @@
 				"typeProperties": {
 					"schema": "DW",
 					"table": "FactProjectTransaction"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactTops')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AOMGroupID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DateAddedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeAddedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LastModifiedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LastModifiedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "JobID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DateCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DateModifiedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeModifiedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DispatchDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DueDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CurrentStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompletedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsCompleted",
+						"type": "bit"
+					},
+					{
+						"name": "DateCompletedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeCompletedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Latitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Longitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupervisorName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TeamLeaderName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovalStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovalDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ApprovalTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ApprovedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovalComments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TemplateName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactTopsJob"
 				}
 			},
 			"dependsOn": [
@@ -10762,6 +11113,24 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/TivoliBlob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TivoliAPI_db')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliAPI_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TivoliAPI_db')]"
 			]
 		},
 		{
@@ -12962,6 +13331,288 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/TivoliSSISLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AOM_Jobs_df')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Tivoli Data Warehouse"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "TivoliAPI_db",
+								"type": "DatasetReference"
+							},
+							"name": "topsjobs"
+						},
+						{
+							"dataset": {
+								"referenceName": "TivoliAPI_db",
+								"type": "DatasetReference"
+							},
+							"name": "Groups"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "FactTops",
+								"type": "DatasetReference"
+							},
+							"name": "FactSync"
+						},
+						{
+							"dataset": {
+								"referenceName": "AOMGroup",
+								"type": "DatasetReference"
+							},
+							"name": "DimAOMGroup"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumns"
+						},
+						{
+							"name": "Staging"
+						},
+						{
+							"name": "AlterRowSettings"
+						},
+						{
+							"name": "SelectFields"
+						},
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     LastRunDate as string (\"2022-05-09 00:00:00\")",
+						"}",
+						"source(output(",
+						"          ID as integer,",
+						"          AOMGroupID as integer,",
+						"          DateAddedID as integer,",
+						"          TimeAddedID as integer,",
+						"          LastModifiedDateID as integer,",
+						"          LastModifiedTimeID as integer,",
+						"          JobID as integer,",
+						"          Title as string,",
+						"          Reference as string,",
+						"          DateCreatedID as integer,",
+						"          TimeCreatedID as integer,",
+						"          DateModifiedID as integer,",
+						"          TimeModifiedID as integer,",
+						"          DispatchDateID as integer,",
+						"          DueDateID as integer,",
+						"          CurrentStatus as string,",
+						"          CompletedBy as string,",
+						"          IsCompleted as boolean,",
+						"          DateCompletedID as integer,",
+						"          TimeCompletedID as integer,",
+						"          Address as string,",
+						"          Latitude as string,",
+						"          Longitude as string,",
+						"          ManagerName as string,",
+						"          SupervisorName as string,",
+						"          TeamLeaderName as string,",
+						"          ApprovalStatus as string,",
+						"          ApprovalDateID as integer,",
+						"          ApprovalTimeID as integer,",
+						"          ApprovedBy as string,",
+						"          ApprovalComments as string,",
+						"          TemplateName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     inputs:['@LastModifedDate' -> ($LastRunDate)],",
+						"     procedureName: 'sp_tops_jobs_DW',",
+						"     schemaName: 'dbo',",
+						"     resultSet: true,",
+						"     format: 'procedure') ~> topsjobs",
+						"source(output(",
+						"          ID as integer,",
+						"          GroupReference as string,",
+						"          GroupCode as string,",
+						"          GroupName as string,",
+						"          Deleted as boolean",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [ID]\\n      ,[GroupReference]\\n      ,[GroupCode]\\n      ,[GroupName]\\n      ,[Deleted]\\n  FROM [AOM].[tbl_AOM_Groups]',",
+						"     format: 'query') ~> Groups",
+						"topsjobs derive(LastModifiedDateTime = currentUTC('GMT')) ~> DerivedColumns",
+						"DerivedColumns select(mapColumn(",
+						"          ID,",
+						"          AOMGroupID,",
+						"          DateAddedID,",
+						"          TimeAddedID,",
+						"          LastModifiedDateID,",
+						"          LastModifiedTimeID,",
+						"          JobID,",
+						"          Title,",
+						"          Reference,",
+						"          DateCreatedID,",
+						"          TimeCreatedID,",
+						"          DateModifiedID,",
+						"          TimeModifiedID,",
+						"          DispatchDateID,",
+						"          DueDateID,",
+						"          CurrentStatus,",
+						"          CompletedBy,",
+						"          IsCompleted,",
+						"          DateCompletedID,",
+						"          TimeCompletedID,",
+						"          Address,",
+						"          Latitude,",
+						"          Longitude,",
+						"          ManagerName,",
+						"          SupervisorName,",
+						"          TeamLeaderName,",
+						"          ApprovalStatus,",
+						"          ApprovalDateID,",
+						"          ApprovalTimeID,",
+						"          ApprovedBy,",
+						"          ApprovalComments,",
+						"          TemplateName,",
+						"          LastModifiedDateTime",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Staging",
+						"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
+						"Groups select(mapColumn(",
+						"          ID,",
+						"          GroupReference,",
+						"          GroupCode,",
+						"          GroupName,",
+						"          Deleted",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> SelectFields",
+						"SelectFields alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRowSettings sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as integer,",
+						"          AOMGroupID as integer,",
+						"          DateAddedID as integer,",
+						"          TimeAddedID as integer,",
+						"          LastModifiedDateID as integer,",
+						"          LastModifiedTimeID as integer,",
+						"          JobID as integer,",
+						"          Title as string,",
+						"          Reference as string,",
+						"          DateCreatedID as integer,",
+						"          TimeCreatedID as integer,",
+						"          DateModifiedID as integer,",
+						"          TimeModifiedID as integer,",
+						"          DispatchDateID as integer,",
+						"          DueDateID as integer,",
+						"          CurrentStatus as string,",
+						"          CompletedBy as string,",
+						"          IsCompleted as boolean,",
+						"          DateCompletedID as integer,",
+						"          TimeCompletedID as integer,",
+						"          Address as string,",
+						"          Latitude as string,",
+						"          Longitude as string,",
+						"          ManagerName as string,",
+						"          SupervisorName as string,",
+						"          TeamLeaderName as string,",
+						"          ApprovalStatus as string,",
+						"          ApprovalDateID as integer,",
+						"          ApprovalTimeID as integer,",
+						"          ApprovedBy as string,",
+						"          ApprovalComments as string,",
+						"          TemplateName as string,",
+						"          LastModifiedDateTime as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID'],",
+						"     format: 'table',",
+						"     batchSize: 10000,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ID,",
+						"          AOMGroupID,",
+						"          DateAddedID,",
+						"          TimeAddedID,",
+						"          LastModifiedDateID,",
+						"          LastModifiedTimeID,",
+						"          JobID,",
+						"          Title,",
+						"          Reference,",
+						"          DateCreatedID,",
+						"          TimeCreatedID,",
+						"          DateModifiedID,",
+						"          TimeModifiedID,",
+						"          DispatchDateID,",
+						"          DueDateID,",
+						"          CurrentStatus,",
+						"          CompletedBy,",
+						"          IsCompleted,",
+						"          DateCompletedID,",
+						"          TimeCompletedID,",
+						"          Address,",
+						"          Latitude,",
+						"          Longitude,",
+						"          ManagerName,",
+						"          SupervisorName,",
+						"          TeamLeaderName,",
+						"          ApprovalStatus,",
+						"          ApprovalDateID,",
+						"          ApprovalTimeID,",
+						"          ApprovedBy,",
+						"          ApprovalComments,",
+						"          TemplateName,",
+						"          LastModifiedDateTime",
+						"     )) ~> FactSync",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as integer,",
+						"          GroupReference as string,",
+						"          GroupCode as string,",
+						"          GroupName as string,",
+						"          Deleted as boolean",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['ID'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ID,",
+						"          GroupReference,",
+						"          GroupCode,",
+						"          GroupName,",
+						"          Deleted",
+						"     )) ~> DimAOMGroup"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TivoliAPI_db')]",
+				"[concat(variables('factoryId'), '/datasets/FactTops')]",
+				"[concat(variables('factoryId'), '/datasets/AOMGroup')]"
 			]
 		},
 		{

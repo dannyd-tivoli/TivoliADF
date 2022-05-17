@@ -24,6 +24,145 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/posystem_project_codes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerName",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "ProjectCodes"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_regional_directors')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RegionalDirectorCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorPOLimit",
+						"type": "decimal",
+						"precision": 28,
+						"scale": 6
+					},
+					{
+						"name": "RegionalDirectorQuoteLimit",
+						"type": "decimal",
+						"precision": 28,
+						"scale": 6
+					},
+					{
+						"name": "RDCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionalDirectorRegion",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "RegionalDirectors"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/posystem_regional_managers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RegionalManagerCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionalManagerEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalManagerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RegionalDirectorCode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RegionalDirectorRegion",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "POSystem",
+					"table": "RegionalManagers"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/posystem_suppliers')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1201,238 +1340,6 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-02-07T13:16:44Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Create_Applications_ActiveEmployeesByManager')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderStoredProcedureName": "[[dbo].[USP_ActiveEmployeesByManager]",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table onboarding.activeemployeesbymanager",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SQL_Reception",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQL_Applications_ActiveEmployeesByManager",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "Employee Data"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-04-01T07:39:05Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Export_AssetData_To_CSV')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderStoredProcedureName": "[[dbo].[USP_TOPSDatabase_Assets]",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SQL_Applications",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "CSV_Blob_TivoliTOPSDatabase",
-								"type": "DatasetReference",
-								"parameters": {
-									"Filename": "Assets.csv"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"QueryItem": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "TOPS Database"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-02T10:06:24Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Export_DepotData_To_CSV')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderStoredProcedureName": "[[dbo].[USP_TOPSDatabase_Depots]",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SQL_Applications",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "CSV_Blob_TivoliTOPSDatabase",
-								"type": "DatasetReference",
-								"parameters": {
-									"Filename": "Depots.csv"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"QueryItem": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "TOPS Database"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-02T10:06:24Z"
 			},
 			"dependsOn": []
 		}

@@ -13,6 +13,33 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_Reception_Budget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TivoliBlob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Excel"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Budget & FC - Upload - Activity Code.xlsx",
+						"container": "tivoli-excel"
+					},
+					"range": ""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_SW_ContractRates')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1048,6 +1075,176 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FactTops')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AOMGroupID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DateAddedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeAddedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LastModifiedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LastModifiedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "JobID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DateCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DateModifiedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeModifiedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DispatchDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DueDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CurrentStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompletedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IsCompleted",
+						"type": "bit"
+					},
+					{
+						"name": "DateCompletedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeCompletedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Latitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Longitude",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SupervisorName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TeamLeaderName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovalStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovalDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ApprovalTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ApprovedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovalComments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TemplateName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactTopsJob"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FixedAssetCSV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1948,365 +2145,6 @@
 				"typeProperties": {
 					"schema": "SW",
 					"table": "SW_Contract_Rates"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Finance_Codes')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQL Tables"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "sw_ref",
-						"type": "nvarchar"
-					},
-					{
-						"name": "site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DateAdded",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "DateModified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "DateDeleted",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Dep Level 3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Dep Level 2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Dep Level 1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "SW",
-					"table": "SW_Finance_Codes"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Site_Data')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQL Tables"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "sw_ref",
-						"type": "nvarchar"
-					},
-					{
-						"name": "site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "team",
-						"type": "nvarchar"
-					},
-					{
-						"name": "week",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "map",
-						"type": "nvarchar"
-					},
-					{
-						"name": "location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "town",
-						"type": "nvarchar"
-					},
-					{
-						"name": "address",
-						"type": "nvarchar"
-					},
-					{
-						"name": "postcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "site_address",
-						"type": "nvarchar"
-					},
-					{
-						"name": "grid",
-						"type": "nvarchar"
-					},
-					{
-						"name": "latitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "longitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dept_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dept_desc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "site_contact",
-						"type": "nvarchar"
-					},
-					{
-						"name": "site_phone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "grass_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "gras_freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "hard_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "hard_freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "rough_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "rough_freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "invasive_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "invasive_freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "hedge_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "hedge_freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "shrub_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "shrub_freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "risk",
-						"type": "nvarchar"
-					},
-					{
-						"name": "access",
-						"type": "nvarchar"
-					},
-					{
-						"name": "comments",
-						"type": "nvarchar"
-					},
-					{
-						"name": "r_manager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "a_manager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tops_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "tos_account",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DateAdded",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "DateModified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "DateDeleted",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Dep Level 3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Dep Level 2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Dep Level 1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SW_Manager",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Contact",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SW_Site_Contact",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LitterLeaf_Freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "LitterLeaf_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "Trees_Freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Trees_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "Gullies_Freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Gullies_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "Planters_Freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planters_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					},
-					{
-						"name": "SiteVisit_Freq",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "SiteVisit_m",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "SW",
-					"table": "SW_Site_Data"
 				}
 			},
 			"dependsOn": []
