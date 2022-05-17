@@ -5147,7 +5147,8 @@
 									"WorkStage": {},
 									"Project": {},
 									"FactSync": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
@@ -5243,7 +5244,7 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "_LastRunDateTime_PO",
+							"variableName": "_LastRunDateTime_Tops",
 							"value": {
 								"value": "@formatDateTime(activity('LastRunDate_Tops').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
 								"type": "Expression"
@@ -5274,14 +5275,18 @@
 								"referenceName": "AOM_Jobs_df",
 								"type": "DataFlowReference",
 								"parameters": {
-									"LastRunDate": "\"2022-05-09 00:00:00\""
+									"LastRunDate": {
+										"value": "'@{variables('_LastRunDateTime_Tops')}'",
+										"type": "Expression"
+									}
 								},
 								"datasetParameters": {
 									"topsjobs": {},
 									"Groups": {},
 									"FactSync": {},
 									"DimAOMGroup": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
