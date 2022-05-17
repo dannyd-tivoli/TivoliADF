@@ -1,0 +1,154 @@
+{
+	"name": "AOM_Jobs_df",
+	"properties": {
+		"folder": {
+			"name": "Tivoli Data Warehouse"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "TivoliAPI_db",
+						"type": "DatasetReference"
+					},
+					"name": "topsjobs"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "FactGL",
+						"type": "DatasetReference"
+					},
+					"name": "FactSync"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumns"
+				},
+				{
+					"name": "Staging"
+				},
+				{
+					"name": "AlterRowSettings"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     LastRunDate as string (\"2022-05-09 00:00:00\")",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     inputs:['@LastModifedDate' -> ($LastRunDate)],",
+				"     procedureName: 'sp_tops_jobs_DW',",
+				"     schemaName: 'dbo',",
+				"     resultSet: true,",
+				"     format: 'procedure') ~> topsjobs",
+				"topsjobs derive(LastModifiedDateTime = currentUTC('GMT')) ~> DerivedColumns",
+				"DerivedColumns select(mapColumn(",
+				"          unqkey,",
+				"          DocumentDateID,",
+				"          CostCentreID = NewCostCentreID,",
+				"          DocumentTypeID = NewDocumentID,",
+				"          TransactionTypeID = NewTransactionTypeID,",
+				"          LastModifiedDateTime = LastModifiedDate,",
+				"          ActivityCodeID = NewActivityCodeID,",
+				"          CustomerID,",
+				"          SupplierID,",
+				"          SourceReference = sourceref,",
+				"          OrderReference = orderref,",
+				"          OriginReference = originref,",
+				"          Description = description,",
+				"          BaseValue = baseval,",
+				"          CurrentValue = currvalue,",
+				"          Quantity = qty,",
+				"          QuantityUnits = qunit,",
+				"          YearNo,",
+				"          Period,",
+				"          BatchReference = batchref,",
+				"          InputDateID,",
+				"          InputTimeID = inputtime,",
+				"          DocumentNumber = docnumber,",
+				"          VatCode = {vat-code},",
+				"          LineNo = line_no,",
+				"          TransactionDateID",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Staging",
+				"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
+				"AlterRowSettings sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID as integer,",
+				"          unqkey as string,",
+				"          BatchReference as string,",
+				"          DocumentNumber as integer,",
+				"          LineNo as integer,",
+				"          CostCentreID as integer,",
+				"          DocumentTypeID as integer,",
+				"          TransactionTypeID as integer,",
+				"          ActivityCodeID as integer,",
+				"          TransactionDateID as integer,",
+				"          DocumentDateID as integer,",
+				"          InputDateID as integer,",
+				"          InputTimeID as integer,",
+				"          CustomerID as integer,",
+				"          SupplierID as integer,",
+				"          YearNo as integer,",
+				"          Period as integer,",
+				"          SourceReference as string,",
+				"          OrderReference as string,",
+				"          OriginReference as string,",
+				"          Description as string,",
+				"          BaseValue as decimal(18,2),",
+				"          CurrentValue as decimal(18,2),",
+				"          Quantity as decimal(18,3),",
+				"          QuantityUnits as string,",
+				"          VatCode as string,",
+				"          LastModifiedDateTime as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unqkey'],",
+				"     format: 'table',",
+				"     batchSize: 10000,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          unqkey,",
+				"          BatchReference,",
+				"          DocumentNumber,",
+				"          LineNo,",
+				"          CostCentreID,",
+				"          DocumentTypeID,",
+				"          TransactionTypeID,",
+				"          ActivityCodeID,",
+				"          TransactionDateID,",
+				"          DocumentDateID,",
+				"          InputDateID,",
+				"          InputTimeID,",
+				"          CustomerID,",
+				"          SupplierID,",
+				"          YearNo,",
+				"          Period,",
+				"          SourceReference,",
+				"          OrderReference,",
+				"          OriginReference,",
+				"          Description,",
+				"          BaseValue,",
+				"          CurrentValue,",
+				"          Quantity,",
+				"          QuantityUnits,",
+				"          VatCode,",
+				"          LastModifiedDateTime",
+				"     )) ~> FactSync"
+			]
+		}
+	}
+}
