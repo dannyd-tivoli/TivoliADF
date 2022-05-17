@@ -13,6 +13,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "topsjobs"
+				},
+				{
+					"dataset": {
+						"referenceName": "TivoliAPI_db",
+						"type": "DatasetReference"
+					},
+					"name": "Groups"
 				}
 			],
 			"sinks": [
@@ -22,6 +29,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "FactSync"
+				},
+				{
+					"dataset": {
+						"referenceName": "AOMGroup",
+						"type": "DatasetReference"
+					},
+					"name": "DimAOMGroup"
 				}
 			],
 			"transformations": [
@@ -33,6 +47,12 @@
 				},
 				{
 					"name": "AlterRowSettings"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -81,6 +101,18 @@
 				"     schemaName: 'dbo',",
 				"     resultSet: true,",
 				"     format: 'procedure') ~> topsjobs",
+				"source(output(",
+				"          ID as integer,",
+				"          GroupReference as string,",
+				"          GroupCode as string,",
+				"          GroupName as string,",
+				"          Deleted as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT [ID]\\n      ,[GroupReference]\\n      ,[GroupCode]\\n      ,[GroupName]\\n      ,[Deleted]\\n  FROM [AOM].[tbl_AOM_Groups]',",
+				"     format: 'query') ~> Groups",
 				"topsjobs derive(LastModifiedDateTime = currentUTC('GMT')) ~> DerivedColumns",
 				"DerivedColumns select(mapColumn(",
 				"          ID,",
@@ -120,6 +152,16 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> Staging",
 				"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
+				"Groups select(mapColumn(",
+				"          ID,",
+				"          GroupReference,",
+				"          GroupCode,",
+				"          GroupName,",
+				"          Deleted",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 alterRow(upsertIf(true())) ~> AlterRow1",
 				"AlterRowSettings sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -201,7 +243,31 @@
 				"          ApprovalComments,",
 				"          TemplateName,",
 				"          LastModifiedDateTime",
-				"     )) ~> FactSync"
+				"     )) ~> FactSync",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID as integer,",
+				"          GroupReference as string,",
+				"          GroupCode as string,",
+				"          GroupName as string,",
+				"          Deleted as boolean",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID,",
+				"          GroupReference,",
+				"          GroupCode,",
+				"          GroupName,",
+				"          Deleted",
+				"     )) ~> DimAOMGroup"
 			]
 		}
 	}

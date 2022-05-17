@@ -1,0 +1,38 @@
+{
+	"name": "AOMGroup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TiviliDW_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GroupReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GroupCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "GroupName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Deleted",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "DW",
+			"table": "DimAOMGroup"
+		}
+	}
+}
