@@ -5147,8 +5147,7 @@
 									"WorkStage": {},
 									"Project": {},
 									"FactSync": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -5285,8 +5284,7 @@
 									"Groups": {},
 									"FactSync": {},
 									"DimAOMGroup": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -5507,6 +5505,33 @@
 						"userProperties": [],
 						"typeProperties": {
 							"storedProcedureName": "[[DW].[sp_DimWorkStage_Merge]"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ProjectLookups",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "DimProject",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[Lookups].[sp_ProjectMapping]"
 						},
 						"linkedServiceName": {
 							"referenceName": "TiviliDW_db",

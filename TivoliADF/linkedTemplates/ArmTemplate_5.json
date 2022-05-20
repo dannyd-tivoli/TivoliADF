@@ -1190,8 +1190,7 @@
 									"WorkStage": {},
 									"Project": {},
 									"FactSync": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -1328,8 +1327,7 @@
 									"Groups": {},
 									"FactSync": {},
 									"DimAOMGroup": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
