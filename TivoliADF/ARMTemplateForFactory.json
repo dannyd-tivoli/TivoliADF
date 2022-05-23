@@ -5333,6 +5333,142 @@
 							"referenceName": "TiviliDW_db",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "LastRunDate_QEW",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Dim Pipeline",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'qew'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set _LastDateTime_QEW",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "LastRunDate_QEW",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "_LastRunDateTime_Tops",
+							"value": {
+								"value": "@formatDateTime(activity('LastRunDate_QEW').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Load Tops Fact_QEW",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Set _LastDateTime_QEW",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Fact_QEW",
+								"type": "DataFlowReference",
+								"parameters": {
+									"LastRunDate": {
+										"value": "'@{variables('_LastRunDateTime_QEW')}'",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"QEWDetail": {},
+									"Project": {},
+									"FactSync": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "UpdateLastRunDate_QEW",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Load Tops Fact_QEW",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[System].[sp_UpdateLastRunDateTime]",
+							"storedProcedureParameters": {
+								"LastRunDate": {
+									"value": {
+										"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"Setting": {
+									"value": "qew",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -5354,6 +5490,9 @@
 					},
 					"_LastRunDateTime_Tops": {
 						"type": "String"
+					},
+					"_LastRunDateTime_QEW": {
+						"type": "String"
 					}
 				},
 				"folder": {
@@ -5369,7 +5508,8 @@
 				"[concat(variables('factoryId'), '/pipelines/OA_DimLoad_PL')]",
 				"[concat(variables('factoryId'), '/dataflows/oa_fact_ProjectTransactions_df')]",
 				"[concat(variables('factoryId'), '/dataflows/oa_fact_PurchaseOrder_df')]",
-				"[concat(variables('factoryId'), '/dataflows/AOM_Jobs_df')]"
+				"[concat(variables('factoryId'), '/dataflows/AOM_Jobs_df')]",
+				"[concat(variables('factoryId'), '/dataflows/Fact_QEW')]"
 			]
 		},
 		{
@@ -9018,6 +9158,234 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FactQEW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QuoteID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QEWDetailsID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RowNo",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OrganisationGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DateCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CompletedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WorkDescription",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientContactName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientContactNo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientContactEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QuoteStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LastModifiedTime",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TivoliNotes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientComments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CancelledReason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientPONumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobRaisedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobRaisedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobAllocatedTo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobCompletedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobCompletedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobRejectedReason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovedDate",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "AdditionalSiteInformation",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SiteAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PostCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientApprover",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InvoiceNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ItemClass",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ItemType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Supplier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CostRate",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Qty",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 6
+					},
+					{
+						"name": "MarkupPerc",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "RowAddedDate",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactQEW"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactTops')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -9364,6 +9732,24 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/TivoliBlob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PowerBI_db')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PowerBI",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PowerBI')]"
 			]
 		},
 		{
@@ -13643,6 +14029,304 @@
 				"[concat(variables('factoryId'), '/datasets/TivoliAPI_db')]",
 				"[concat(variables('factoryId'), '/datasets/FactTops')]",
 				"[concat(variables('factoryId'), '/datasets/AOMGroup')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Fact_QEW')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "Tivoli Data Warehouse"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PowerBI_db",
+								"type": "DatasetReference"
+							},
+							"name": "QEWDetail"
+						},
+						{
+							"dataset": {
+								"referenceName": "TivoliDW_db",
+								"type": "DatasetReference"
+							},
+							"name": "Project"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "FactQEW",
+								"type": "DatasetReference"
+							},
+							"name": "FactSync"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumns"
+						},
+						{
+							"name": "Staging"
+						},
+						{
+							"name": "AlterRowSettings"
+						},
+						{
+							"name": "ProjectLookup"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     LastRunDate as string (\"2022-05-09 00:00:00\")",
+						"}",
+						"source(output(",
+						"          QuoteID as integer,",
+						"          QEWDetailsID as integer,",
+						"          RowNo as long,",
+						"          OrganisationGroup as string,",
+						"          Reference as string,",
+						"          DateCreated as timestamp,",
+						"          DateCreatedID as integer,",
+						"          TimeCreatedID as integer,",
+						"          CompletedBy as string,",
+						"          WorkDescription as string,",
+						"          Site as string,",
+						"          ClientContactName as string,",
+						"          ClientContactNo as string,",
+						"          ClientContactEmail as string,",
+						"          ProjectCode as string,",
+						"          QuoteStatus as string,",
+						"          LastModifiedDateID as integer,",
+						"          LastModifiedTime as integer,",
+						"          TivoliNotes as string,",
+						"          ClientComments as string,",
+						"          CancelledReason as string,",
+						"          ClientPONumber as string,",
+						"          EWJobRaisedDateID as integer,",
+						"          EWJobRaisedTimeID as integer,",
+						"          EWJobReference as string,",
+						"          EWJobID as integer,",
+						"          EWJobStatus as string,",
+						"          EWJobAllocatedTo as string,",
+						"          EWJobCompletedDateID as integer,",
+						"          EWJobCompletedTimeID as integer,",
+						"          EWJobRejectedReason as string,",
+						"          ApprovedDate as timestamp,",
+						"          AdditionalSiteInformation as string,",
+						"          SiteAddress as string,",
+						"          PostCode as string,",
+						"          ClientApprover as string,",
+						"          InvoiceNumber as string,",
+						"          ItemClass as string,",
+						"          ItemType as string,",
+						"          Description as string,",
+						"          Supplier as string,",
+						"          CostRate as decimal(18,2),",
+						"          Qty as decimal(18,6),",
+						"          MarkupPerc as decimal(18,2),",
+						"          RowAddedDate as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     inputs:['@LastModifedDate' -> ($LastRunDate)],",
+						"     procedureName: 'sp_QEW_DW',",
+						"     schemaName: 'dbo',",
+						"     resultSet: true,",
+						"     format: 'procedure') ~> QEWDetail",
+						"source(output(",
+						"          ProjectID as integer,",
+						"          ProjectCode as string,",
+						"          FromDate as date,",
+						"          ToDate as date",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [ProjectID]\\n      ,[ProjectCode]\\n      ,[FromDate]\\n      ,[ToDate]\\n  FROM [DW].[DimProject]',",
+						"     format: 'query') ~> Project",
+						"ProjectLookup derive(LastModifiedDateTime = currentUTC('GMT'),",
+						"          NewProjectID = iif(isNull(ProjectID), -1, ProjectID)) ~> DerivedColumns",
+						"DerivedColumns select(mapColumn(",
+						"          QuoteID,",
+						"          QEWDetailsID,",
+						"          RowNo,",
+						"          OrganisationGroup,",
+						"          Reference,",
+						"          DateCreatedID,",
+						"          TimeCreatedID,",
+						"          CompletedBy,",
+						"          WorkDescription,",
+						"          Site,",
+						"          ClientContactName,",
+						"          ClientContactNo,",
+						"          ClientContactEmail,",
+						"          ProjectCode = QEWDetail@ProjectCode,",
+						"          QuoteStatus,",
+						"          LastModifiedDateID,",
+						"          LastModifiedTime,",
+						"          TivoliNotes,",
+						"          ClientComments,",
+						"          CancelledReason,",
+						"          ClientPONumber,",
+						"          EWJobRaisedDateID,",
+						"          EWJobRaisedTimeID,",
+						"          EWJobReference,",
+						"          EWJobID,",
+						"          EWJobStatus,",
+						"          EWJobAllocatedTo,",
+						"          EWJobCompletedDateID,",
+						"          EWJobCompletedTimeID,",
+						"          EWJobRejectedReason,",
+						"          ApprovedDate,",
+						"          AdditionalSiteInformation,",
+						"          SiteAddress,",
+						"          PostCode,",
+						"          ClientApprover,",
+						"          InvoiceNumber,",
+						"          ItemClass,",
+						"          ItemType,",
+						"          Description,",
+						"          Supplier,",
+						"          CostRate,",
+						"          Qty,",
+						"          MarkupPerc,",
+						"          RowAddedDate,",
+						"          ProjectID,",
+						"          ProjectCode = Project@ProjectCode,",
+						"          FromDate,",
+						"          ToDate,",
+						"          LastModifiedDateTime,",
+						"          NewProjectID",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Staging",
+						"Staging alterRow(upsertIf(true())) ~> AlterRowSettings",
+						"QEWDetail, Project lookup(QEWDetail@ProjectCode == Project@ProjectCode",
+						"     && DateCreated >= FromDate",
+						"     && DateCreated <= ToDate,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'right')~> ProjectLookup",
+						"AlterRowSettings sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as integer,",
+						"          QuoteID as integer,",
+						"          QEWDetailsID as integer,",
+						"          RowNo as long,",
+						"          OrganisationGroup as string,",
+						"          Reference as string,",
+						"          DateCreatedID as integer,",
+						"          TimeCreatedID as integer,",
+						"          CompletedBy as string,",
+						"          WorkDescription as string,",
+						"          Site as string,",
+						"          ClientContactName as string,",
+						"          ClientContactNo as string,",
+						"          ClientContactEmail as string,",
+						"          ProjectCode as string,",
+						"          QuoteStatus as string,",
+						"          LastModifiedDateID as integer,",
+						"          LastModifiedTime as integer,",
+						"          TivoliNotes as string,",
+						"          ClientComments as string,",
+						"          CancelledReason as string,",
+						"          ClientPONumber as string,",
+						"          EWJobRaisedDateID as integer,",
+						"          EWJobRaisedTimeID as integer,",
+						"          EWJobReference as string,",
+						"          EWJobID as integer,",
+						"          EWJobStatus as string,",
+						"          EWJobAllocatedTo as string,",
+						"          EWJobCompletedDateID as integer,",
+						"          EWJobCompletedTimeID as integer,",
+						"          EWJobRejectedReason as string,",
+						"          ApprovedDate as timestamp,",
+						"          AdditionalSiteInformation as string,",
+						"          SiteAddress as string,",
+						"          PostCode as string,",
+						"          ClientApprover as string,",
+						"          InvoiceNumber as string,",
+						"          ItemClass as string,",
+						"          ItemType as string,",
+						"          Description as string,",
+						"          Supplier as string,",
+						"          CostRate as decimal(18,2),",
+						"          Qty as decimal(18,6),",
+						"          MarkupPerc as decimal(18,2),",
+						"          RowAddedDate as timestamp,",
+						"          LastModifiedDateTime as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['QuoteID','QEWDetailsID'],",
+						"     format: 'table',",
+						"     batchSize: 10000,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          QuoteID,",
+						"          QEWDetailsID,",
+						"          RowNo,",
+						"          OrganisationGroup,",
+						"          Reference,",
+						"          DateCreatedID,",
+						"          TimeCreatedID,",
+						"          CompletedBy,",
+						"          WorkDescription,",
+						"          Site,",
+						"          ClientContactName,",
+						"          ClientContactNo,",
+						"          ClientContactEmail,",
+						"          ProjectCode,",
+						"          QuoteStatus,",
+						"          LastModifiedDateID,",
+						"          LastModifiedTime,",
+						"          TivoliNotes,",
+						"          ClientComments,",
+						"          CancelledReason,",
+						"          ClientPONumber,",
+						"          EWJobRaisedDateID,",
+						"          EWJobRaisedTimeID,",
+						"          EWJobReference,",
+						"          EWJobID,",
+						"          EWJobStatus,",
+						"          EWJobAllocatedTo,",
+						"          EWJobCompletedDateID,",
+						"          EWJobCompletedTimeID,",
+						"          EWJobRejectedReason,",
+						"          ApprovedDate,",
+						"          AdditionalSiteInformation,",
+						"          SiteAddress,",
+						"          PostCode,",
+						"          ClientApprover,",
+						"          InvoiceNumber,",
+						"          ItemClass,",
+						"          ItemType,",
+						"          Description,",
+						"          Supplier,",
+						"          CostRate,",
+						"          Qty,",
+						"          MarkupPerc,",
+						"          RowAddedDate,",
+						"          LastModifiedDateTime",
+						"     )) ~> FactSync"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PowerBI_db')]",
+				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
+				"[concat(variables('factoryId'), '/datasets/FactQEW')]"
 			]
 		},
 		{

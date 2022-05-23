@@ -13,6 +13,100 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_ActiveEmployeesByManager')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EmployeeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ManagerID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "Onboarding",
+					"table": "ActiveEmployeesByManager"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Contract_Rates')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Applications2_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQL Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "sw_ref",
+						"type": "nvarchar"
+					},
+					{
+						"name": "site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "task",
+						"type": "nvarchar"
+					},
+					{
+						"name": "value",
+						"type": "decimal",
+						"precision": 12,
+						"scale": 2
+					},
+					{
+						"name": "DateAdded",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateModified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "DateDeleted",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "SW",
+					"table": "SW_Contract_Rates"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Finance_Codes')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1548,92 +1642,6 @@
 				"typeProperties": {
 					"schema": "POSystem",
 					"table": "Suppliers"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/posystem_activity_codes')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ActivityCode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ActivityName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ActivityCategory",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ActivityType",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "POSystem",
-					"table": "ActivityCodes"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/posystem_managers')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "AreaCode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ManagerEmail",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ManagerName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ManagerQuoteLimit",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ManagerRegion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "RMCode",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "TOPsID",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "POSystem",
-					"table": "Managers"
 				}
 			},
 			"dependsOn": []

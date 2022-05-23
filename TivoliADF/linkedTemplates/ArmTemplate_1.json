@@ -1075,6 +1075,232 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FactQEW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QuoteID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QEWDetailsID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RowNo",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OrganisationGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DateCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeCreatedID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CompletedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WorkDescription",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientContactName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientContactNo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientContactEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QuoteStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "LastModifiedTime",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TivoliNotes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientComments",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CancelledReason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientPONumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobRaisedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobRaisedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobReference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobAllocatedTo",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EWJobCompletedDateID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobCompletedTimeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EWJobRejectedReason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ApprovedDate",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "AdditionalSiteInformation",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SiteAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PostCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ClientApprover",
+						"type": "nvarchar"
+					},
+					{
+						"name": "InvoiceNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ItemClass",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ItemType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Supplier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CostRate",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Qty",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 6
+					},
+					{
+						"name": "MarkupPerc",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "RowAddedDate",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "LastModifiedDateTime",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "DW",
+					"table": "FactQEW"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactTops')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1416,6 +1642,22 @@
 						"type": "String"
 					}
 				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PowerBI_db')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PowerBI",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -2052,100 +2294,6 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQL_Applications_ActiveEmployeesByManager')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQL Tables"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "EmployeeID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ManagerID",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "Onboarding",
-					"table": "ActiveEmployeesByManager"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQL_Applications_SW_Contract_Rates')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Applications2_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQL Tables"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "sw_ref",
-						"type": "nvarchar"
-					},
-					{
-						"name": "site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "task",
-						"type": "nvarchar"
-					},
-					{
-						"name": "value",
-						"type": "decimal",
-						"precision": 12,
-						"scale": 2
-					},
-					{
-						"name": "DateAdded",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "DateModified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "DateDeleted",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "SW",
-					"table": "SW_Contract_Rates"
-				}
 			},
 			"dependsOn": []
 		}
