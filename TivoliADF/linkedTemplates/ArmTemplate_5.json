@@ -2359,7 +2359,7 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "_LastRunDateTime_Tops",
+							"variableName": "_LastRunDateTime_QEW",
 							"value": {
 								"value": "@formatDateTime(activity('LastRunDate_QEW').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
 								"type": "Expression"
