@@ -236,7 +236,6 @@
 				"     updateable:false,",
 				"     upsertable:true,",
 				"     keys:['QuoteID','QEWDetailsID'],",
-				"     skipKeyWrites:true,",
 				"     format: 'table',",
 				"     batchSize: 10000,",
 				"     skipDuplicateMapInputs: true,",
