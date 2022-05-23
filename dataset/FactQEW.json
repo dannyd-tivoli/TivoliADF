@@ -1,0 +1,223 @@
+{
+	"name": "FactQEW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TiviliDW_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QuoteID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QEWDetailsID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RowNo",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OrganisationGroup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Reference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DateCreatedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeCreatedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CompletedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WorkDescription",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientContactName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientContactNo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientContactEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QuoteStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastModifiedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LastModifiedTime",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TivoliNotes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientComments",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CancelledReason",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientPONumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EWJobRaisedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobRaisedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobReference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EWJobID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EWJobAllocatedTo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EWJobCompletedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobCompletedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobRejectedReason",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ApprovedDate",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "AdditionalSiteInformation",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SiteAddress",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PostCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ClientApprover",
+				"type": "nvarchar"
+			},
+			{
+				"name": "InvoiceNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ItemClass",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ItemType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CostRate",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "Qty",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 6
+			},
+			{
+				"name": "MarkupPerc",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "RowAddedDate",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "LastModifiedDateTime",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "DW",
+			"table": "FactQEW"
+		}
+	}
+}
