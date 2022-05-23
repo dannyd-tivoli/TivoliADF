@@ -551,6 +551,135 @@
 					"referenceName": "TiviliDW_db",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "LastRunDate_QEW",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Dim Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'qew'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "TivoliDW_db",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Set _LastDateTime_QEW",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LastRunDate_QEW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "_LastRunDateTime_Tops",
+					"value": {
+						"value": "@formatDateTime(activity('LastRunDate_QEW').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Load Tops Fact_QEW",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Set _LastDateTime_QEW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Fact_QEW",
+						"type": "DataFlowReference",
+						"parameters": {
+							"LastRunDate": {
+								"value": "'@{variables('_LastRunDateTime_QEW')}'",
+								"type": "Expression"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "UpdateLastRunDate_QEW",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Load Tops Fact_QEW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[System].[sp_UpdateLastRunDateTime]",
+					"storedProcedureParameters": {
+						"LastRunDate": {
+							"value": {
+								"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"Setting": {
+							"value": "qew",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "TiviliDW_db",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"variables": {
@@ -567,6 +696,9 @@
 				"type": "String"
 			},
 			"_LastRunDateTime_Tops": {
+				"type": "String"
+			},
+			"_LastRunDateTime_QEW": {
 				"type": "String"
 			}
 		},
