@@ -1,0 +1,12 @@
+{
+	"name": "PowerBI_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PowerBI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
