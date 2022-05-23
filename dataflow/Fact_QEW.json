@@ -55,6 +55,7 @@
 				"          RowNo as long,",
 				"          OrganisationGroup as string,",
 				"          Reference as string,",
+				"          DateCreated as timestamp,",
 				"          DateCreatedID as integer,",
 				"          TimeCreatedID as integer,",
 				"          CompletedBy as string,",
