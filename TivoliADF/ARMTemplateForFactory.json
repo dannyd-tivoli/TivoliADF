@@ -5780,7 +5780,7 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "_LastRunDateTime_Tops",
+							"variableName": "_LastRunDateTime_QEW",
 							"value": {
 								"value": "@formatDateTime(activity('LastRunDate_QEW').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
 								"type": "Expression"
@@ -14376,6 +14376,7 @@
 						"          RowNo,",
 						"          OrganisationGroup,",
 						"          Reference,",
+						"          DateCreated,",
 						"          DateCreatedID,",
 						"          TimeCreatedID,",
 						"          CompletedBy,",
@@ -14416,8 +14417,12 @@
 						"          Qty,",
 						"          MarkupPerc,",
 						"          RowAddedDate,",
+						"          ProjectID,",
+						"          ProjectCode = Project@ProjectCode,",
+						"          FromDate,",
+						"          ToDate,",
 						"          LastModifiedDateTime,",
-						"          ProjectID = NewProjectID",
+						"          NewProjectID",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> Staging",
@@ -14483,7 +14488,6 @@
 						"     updateable:false,",
 						"     upsertable:true,",
 						"     keys:['QuoteID','QEWDetailsID'],",
-						"     skipKeyWrites:true,",
 						"     format: 'table',",
 						"     batchSize: 10000,",
 						"     skipDuplicateMapInputs: true,",
