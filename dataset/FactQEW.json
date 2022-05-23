@@ -14,12 +14,67 @@
 				"precision": 10
 			},
 			{
+				"name": "DateCreatedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeCreatedID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LastModifiedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LastModifiedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobRaisedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobRaisedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobCompletedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EWJobCompletedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ApprovedDateID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ApprovedTimeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "QuoteID",
 				"type": "int",
 				"precision": 10
 			},
 			{
 				"name": "QEWDetailsID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProjectID",
 				"type": "int",
 				"precision": 10
 			},
@@ -35,16 +90,6 @@
 			{
 				"name": "Reference",
 				"type": "nvarchar"
-			},
-			{
-				"name": "DateCreatedID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "TimeCreatedID",
-				"type": "int",
-				"precision": 10
 			},
 			{
 				"name": "CompletedBy",
@@ -71,22 +116,8 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "ProjectCode",
-				"type": "nvarchar"
-			},
-			{
 				"name": "QuoteStatus",
 				"type": "nvarchar"
-			},
-			{
-				"name": "LastModifiedDateID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "LastModifiedTime",
-				"type": "int",
-				"precision": 10
 			},
 			{
 				"name": "TivoliNotes",
@@ -103,16 +134,6 @@
 			{
 				"name": "ClientPONumber",
 				"type": "nvarchar"
-			},
-			{
-				"name": "EWJobRaisedDateID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "EWJobRaisedTimeID",
-				"type": "int",
-				"precision": 10
 			},
 			{
 				"name": "EWJobReference",
@@ -132,23 +153,8 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "EWJobCompletedDateID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "EWJobCompletedTimeID",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "EWJobRejectedReason",
 				"type": "nvarchar"
-			},
-			{
-				"name": "ApprovedDate",
-				"type": "datetime2",
-				"scale": 7
 			},
 			{
 				"name": "AdditionalSiteInformation",
@@ -156,10 +162,6 @@
 			},
 			{
 				"name": "SiteAddress",
-				"type": "nvarchar"
-			},
-			{
-				"name": "PostCode",
 				"type": "nvarchar"
 			},
 			{
