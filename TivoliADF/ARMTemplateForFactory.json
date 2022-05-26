@@ -5469,6 +5469,33 @@
 							"referenceName": "TiviliDW_db",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "ProjectTrans Summary",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "UpdateLastRunDate_PT",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "DW.sp_FactProjectTransSummary"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -5690,221 +5717,6 @@
 				"lastPublishTime": "2022-05-11T10:30:45Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OA_Fact_test')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "GL Data from Open Accounts",
-				"activities": [
-					{
-						"name": "CurrentDate",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "_CurrentDate",
-							"value": {
-								"value": "@utcnow()",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Dim Pipeline",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "CurrentDate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "OA_DimLoad_PL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "LastRunDate_QEW",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "Dim Pipeline",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT CAST(ISNULL([LastRunDateTime], '1900-01-01') AS date) AS LastRunDateTime FROM [System].[Config]  WHERE setting = 'qew'",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "TivoliDW_db",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Set _LastDateTime_QEW",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "LastRunDate_QEW",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "_LastRunDateTime_QEW",
-							"value": {
-								"value": "@formatDateTime(activity('LastRunDate_QEW').output.FirstRow.LastRunDateTime, 'yyyy-MM-dd HH:mm:ss')",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "Load Tops Fact_QEW",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Set _LastDateTime_QEW",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Fact_QEW",
-								"type": "DataFlowReference",
-								"parameters": {
-									"LastRunDate": {
-										"value": "'@{variables('_LastRunDateTime_QEW')}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"QEWDetail": {},
-									"Project": {},
-									"FactSync": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "UpdateLastRunDate_QEW",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Load Tops Fact_QEW",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[System].[sp_UpdateLastRunDateTime]",
-							"storedProcedureParameters": {
-								"LastRunDate": {
-									"value": {
-										"value": "@formatDateTime(string(variables('_CurrentDate')), 'yyyy-MM-dd')",
-										"type": "Expression"
-									},
-									"type": "Datetime"
-								},
-								"Setting": {
-									"value": "qew",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "TiviliDW_db",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"_LastRunDateTime_GL": {
-						"type": "String"
-					},
-					"_CurrentDate": {
-						"type": "String"
-					},
-					"_LastRunDateTime_PT": {
-						"type": "String"
-					},
-					"_LastRunDateTime_PO": {
-						"type": "String"
-					},
-					"_LastRunDateTime_Tops": {
-						"type": "String"
-					},
-					"_LastRunDateTime_QEW": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "Data Warehouse Pipelines"
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-05-11T10:30:46Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/OA_DimLoad_PL')]",
-				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
-				"[concat(variables('factoryId'), '/dataflows/Fact_QEW')]",
 				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
 			]
 		},
