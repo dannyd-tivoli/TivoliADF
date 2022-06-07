@@ -914,7 +914,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 1
+											"ordinal": 2
 										},
 										"sink": {
 											"name": "WorkstageCode",
@@ -926,7 +926,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 2
+											"ordinal": 3
 										},
 										"sink": {
 											"name": "FileName",
@@ -938,7 +938,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 3
+											"ordinal": 4
 										},
 										"sink": {
 											"name": "ActivityCode",
@@ -950,7 +950,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 5
+											"ordinal": 6
 										},
 										"sink": {
 											"name": "PackName",
@@ -962,7 +962,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 6
+											"ordinal": 7
 										},
 										"sink": {
 											"name": "TabName",
@@ -974,7 +974,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 8
+											"ordinal": 9
 										},
 										"sink": {
 											"name": "April",
@@ -986,7 +986,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 9
+											"ordinal": 10
 										},
 										"sink": {
 											"name": "May",
@@ -998,7 +998,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 10
+											"ordinal": 11
 										},
 										"sink": {
 											"name": "June",
@@ -1010,7 +1010,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 11
+											"ordinal": 12
 										},
 										"sink": {
 											"name": "July",
@@ -1022,7 +1022,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 12
+											"ordinal": 13
 										},
 										"sink": {
 											"name": "August",
@@ -1034,7 +1034,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 13
+											"ordinal": 14
 										},
 										"sink": {
 											"name": "September",
@@ -1046,7 +1046,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 14
+											"ordinal": 15
 										},
 										"sink": {
 											"name": "October",
@@ -1058,7 +1058,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 15
+											"ordinal": 16
 										},
 										"sink": {
 											"name": "November",
@@ -1070,7 +1070,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 16
+											"ordinal": 17
 										},
 										"sink": {
 											"name": "December",
@@ -1082,7 +1082,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 17
+											"ordinal": 18
 										},
 										"sink": {
 											"name": "January",
@@ -1094,7 +1094,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 18
+											"ordinal": 19
 										},
 										"sink": {
 											"name": "February",
@@ -1106,7 +1106,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 19
+											"ordinal": 20
 										},
 										"sink": {
 											"name": "March",
@@ -1118,10 +1118,22 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 20
+											"ordinal": 21
 										},
 										"sink": {
 											"name": "FinancialYear",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"physicalType": "String",
+											"ordinal": 1
+										},
+										"sink": {
+											"name": "ProjectCode",
 											"type": "String",
 											"physicalType": "nvarchar"
 										}
@@ -1154,7 +1166,7 @@
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Move data from Finance spreadsheet to Staging table",
+								"activity": "Remove a couple header columns",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1180,6 +1192,38 @@
 						"linkedServiceName": {
 							"referenceName": "TiviliDW_db",
 							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Remove a couple header columns",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Move data from Finance spreadsheet to Staging table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "Reception",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "delete Finance.Budget_Staging where filename in ('file name', 'name')\nupdate Finance.Budget_Staging set Financialyear = '2023'"
+								}
+							]
 						}
 					}
 				],

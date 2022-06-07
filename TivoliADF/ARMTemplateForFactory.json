@@ -1049,7 +1049,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 1
+											"ordinal": 2
 										},
 										"sink": {
 											"name": "WorkstageCode",
@@ -1061,7 +1061,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 2
+											"ordinal": 3
 										},
 										"sink": {
 											"name": "FileName",
@@ -1073,7 +1073,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 3
+											"ordinal": 4
 										},
 										"sink": {
 											"name": "ActivityCode",
@@ -1085,7 +1085,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 5
+											"ordinal": 6
 										},
 										"sink": {
 											"name": "PackName",
@@ -1097,7 +1097,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 6
+											"ordinal": 7
 										},
 										"sink": {
 											"name": "TabName",
@@ -1109,7 +1109,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 8
+											"ordinal": 9
 										},
 										"sink": {
 											"name": "April",
@@ -1121,7 +1121,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 9
+											"ordinal": 10
 										},
 										"sink": {
 											"name": "May",
@@ -1133,7 +1133,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 10
+											"ordinal": 11
 										},
 										"sink": {
 											"name": "June",
@@ -1145,7 +1145,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 11
+											"ordinal": 12
 										},
 										"sink": {
 											"name": "July",
@@ -1157,7 +1157,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 12
+											"ordinal": 13
 										},
 										"sink": {
 											"name": "August",
@@ -1169,7 +1169,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 13
+											"ordinal": 14
 										},
 										"sink": {
 											"name": "September",
@@ -1181,7 +1181,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 14
+											"ordinal": 15
 										},
 										"sink": {
 											"name": "October",
@@ -1193,7 +1193,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 15
+											"ordinal": 16
 										},
 										"sink": {
 											"name": "November",
@@ -1205,7 +1205,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 16
+											"ordinal": 17
 										},
 										"sink": {
 											"name": "December",
@@ -1217,7 +1217,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 17
+											"ordinal": 18
 										},
 										"sink": {
 											"name": "January",
@@ -1229,7 +1229,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 18
+											"ordinal": 19
 										},
 										"sink": {
 											"name": "February",
@@ -1241,7 +1241,7 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 19
+											"ordinal": 20
 										},
 										"sink": {
 											"name": "March",
@@ -1253,10 +1253,22 @@
 										"source": {
 											"type": "String",
 											"physicalType": "String",
-											"ordinal": 20
+											"ordinal": 21
 										},
 										"sink": {
 											"name": "FinancialYear",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"physicalType": "String",
+											"ordinal": 1
+										},
+										"sink": {
+											"name": "ProjectCode",
 											"type": "String",
 											"physicalType": "nvarchar"
 										}
@@ -1289,7 +1301,7 @@
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Move data from Finance spreadsheet to Staging table",
+								"activity": "Remove a couple header columns",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1316,6 +1328,38 @@
 							"referenceName": "TiviliDW_db",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "Remove a couple header columns",
+						"type": "Script",
+						"dependsOn": [
+							{
+								"activity": "Move data from Finance spreadsheet to Staging table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "Reception",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "delete Finance.Budget_Staging where filename in ('file name', 'name')\nupdate Finance.Budget_Staging set Financialyear = '2023'"
+								}
+							]
+						}
 					}
 				],
 				"policy": {
@@ -1331,7 +1375,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Excel_Reception_Budget')]",
 				"[concat(variables('factoryId'), '/datasets/Reception_FactBudget_Staging')]",
-				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]"
+				"[concat(variables('factoryId'), '/linkedServices/TiviliDW_db')]",
+				"[concat(variables('factoryId'), '/linkedServices/Reception')]"
 			]
 		},
 		{
@@ -8124,12 +8169,118 @@
 					"sheetName": "Sheet1",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Budget & FC - Upload - Activity Code.xlsx",
+						"fileName": "Budget  FC - Upload - Activity Code.xlsx",
 						"container": "tivoli-excel"
 					},
 					"range": ""
 				},
-				"schema": []
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/TivoliBlob')]"
@@ -9927,11 +10078,6 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
 						"name": "WorkstageCode",
 						"type": "nvarchar"
 					},
@@ -9953,80 +10099,59 @@
 					},
 					{
 						"name": "April",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "May",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "June",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "July",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "August",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "September",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "October",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "November",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "December",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "January",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "February",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "March",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "FinancialYear",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
@@ -15498,6 +15623,44 @@
 				"[concat(variables('factoryId'), '/datasets/Reception_db')]",
 				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
 				"[concat(variables('factoryId'), '/datasets/FactPO')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DW_Full_04_00')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "OA_DIMAndFactLoad_PL",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-06-07T10:32:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								4
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/OA_DIMAndFactLoad_PL')]"
 			]
 		}
 	]

@@ -30,12 +30,118 @@
 					"sheetName": "Sheet1",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Budget & FC - Upload - Activity Code.xlsx",
+						"fileName": "Budget  FC - Upload - Activity Code.xlsx",
 						"container": "tivoli-excel"
 					},
 					"range": ""
 				},
-				"schema": []
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
@@ -1807,11 +1913,6 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
 						"name": "WorkstageCode",
 						"type": "nvarchar"
 					},
@@ -1833,80 +1934,59 @@
 					},
 					{
 						"name": "April",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "May",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "June",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "July",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "August",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "September",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "October",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "November",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "December",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "January",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "February",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "March",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
+						"type": "nvarchar"
 					},
 					{
 						"name": "FinancialYear",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectCode",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
