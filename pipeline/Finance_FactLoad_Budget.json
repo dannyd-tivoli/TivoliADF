@@ -343,7 +343,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "delete Finance.Budget_Staging where filename in ('file name', 'name')"
+							"text": "delete Finance.Budget_Staging where filename in ('file name', 'name')\nupdate Finance.Budget_Staging set Financialyear = '2023'"
 						}
 					]
 				}
