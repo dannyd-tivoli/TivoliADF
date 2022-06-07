@@ -288,7 +288,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Move data from Finance spreadsheet to Staging table",
+						"activity": "Remove a couple header columns",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -314,6 +314,38 @@
 				"linkedServiceName": {
 					"referenceName": "TiviliDW_db",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Remove a couple header columns",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Move data from Finance spreadsheet to Staging table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "Reception",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "delete Finance.Budget_Staging where filename in ('file name', 'name')"
+						}
+					]
 				}
 			}
 		],
