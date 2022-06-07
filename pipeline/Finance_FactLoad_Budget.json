@@ -38,7 +38,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 1
+									"ordinal": 2
 								},
 								"sink": {
 									"name": "WorkstageCode",
@@ -50,7 +50,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 2
+									"ordinal": 3
 								},
 								"sink": {
 									"name": "FileName",
@@ -62,7 +62,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 3
+									"ordinal": 4
 								},
 								"sink": {
 									"name": "ActivityCode",
@@ -98,7 +98,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 8
+									"ordinal": 7
 								},
 								"sink": {
 									"name": "April",
@@ -110,7 +110,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 9
+									"ordinal": 8
 								},
 								"sink": {
 									"name": "May",
@@ -122,7 +122,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 10
+									"ordinal": 9
 								},
 								"sink": {
 									"name": "June",
@@ -134,7 +134,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 11
+									"ordinal": 10
 								},
 								"sink": {
 									"name": "July",
@@ -146,7 +146,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 12
+									"ordinal": 11
 								},
 								"sink": {
 									"name": "August",
@@ -158,7 +158,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 13
+									"ordinal": 12
 								},
 								"sink": {
 									"name": "September",
@@ -170,7 +170,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 14
+									"ordinal": 13
 								},
 								"sink": {
 									"name": "October",
@@ -182,7 +182,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 15
+									"ordinal": 14
 								},
 								"sink": {
 									"name": "November",
@@ -194,7 +194,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 16
+									"ordinal": 15
 								},
 								"sink": {
 									"name": "December",
@@ -206,7 +206,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 17
+									"ordinal": 16
 								},
 								"sink": {
 									"name": "January",
@@ -218,7 +218,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 18
+									"ordinal": 17
 								},
 								"sink": {
 									"name": "February",
@@ -230,7 +230,7 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 19
+									"ordinal": 18
 								},
 								"sink": {
 									"name": "March",
@@ -242,10 +242,22 @@
 								"source": {
 									"type": "String",
 									"physicalType": "String",
-									"ordinal": 20
+									"ordinal": 19
 								},
 								"sink": {
 									"name": "FinancialYear",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"type": "String",
+									"physicalType": "String",
+									"ordinal": 1
+								},
+								"sink": {
+									"name": "ProjectCode",
 									"type": "String",
 									"physicalType": "nvarchar"
 								}
