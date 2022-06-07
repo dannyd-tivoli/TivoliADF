@@ -107,7 +107,13 @@
 						"          ApprovalTimeID as integer,",
 						"          ApprovedBy as string,",
 						"          ApprovalComments as string,",
-						"          TemplateName as string",
+						"          TemplateName as string,",
+						"          ResponsiblePerson as string,",
+						"          StartTime as string,",
+						"          FinishTime as string,",
+						"          IssuesOnSite as string,",
+						"          GMActivities as string,",
+						"          usid as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -163,7 +169,13 @@
 						"          ApprovedBy,",
 						"          ApprovalComments,",
 						"          TemplateName,",
-						"          LastModifiedDateTime",
+						"          LastModifiedDateTime,",
+						"          ResponsiblePerson,",
+						"          StartTime,",
+						"          FinishTime,",
+						"          IssuesOnSite,",
+						"          GMActivities,",
+						"          usid",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> Staging",
@@ -2927,6 +2939,44 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DW_Full_04_00')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "OA_DIMAndFactLoad_PL",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-06-07T10:32:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								4
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/OA_DIMAndFactLoad_PL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Daily 5am')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -2969,44 +3019,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Pipeline_TOPSDatabase')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DW_Full_04_00')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "OA_DIMAndFactLoad_PL",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2022-06-07T10:32:00Z",
-						"timeZone": "UTC",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								4
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/OA_DIMAndFactLoad_PL')]"
 			]
 		}
 	]
