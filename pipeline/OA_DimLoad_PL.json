@@ -182,7 +182,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[Lookups].[sp_DimSiteMerge]"
+					"storedProcedureName": "[DW].[sp_DimSiteMerge]"
 				},
 				"linkedServiceName": {
 					"referenceName": "TiviliDW_db",
