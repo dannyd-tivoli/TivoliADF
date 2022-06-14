@@ -1573,7 +1573,8 @@
 						"          AmendmentDateID,",
 						"          EndDateID,",
 						"          LastModifiedDateTime,",
-						"          RevDateID",
+						"          RevDateID,",
+						"          updzdatetime = OALastModifiedDateTime",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> Staging",
@@ -1656,6 +1657,7 @@
 						"          BaseValue as decimal(18,2),",
 						"          BaseValueOutstanding as decimal(18,2),",
 						"          BasePrice as decimal(17,5),",
+						"          updzdatetime as string,",
 						"          LastModifiedDateTime as timestamp",
 						"     ),",
 						"     deletable:false,",
@@ -1719,7 +1721,8 @@
 						"          BaseValue,",
 						"          BaseValueOutstanding,",
 						"          BasePrice,",
-						"          LastModifiedDateTime",
+						"          LastModifiedDateTime,",
+						"          updzdatetime",
 						"     )) ~> FactSync"
 					]
 				}
