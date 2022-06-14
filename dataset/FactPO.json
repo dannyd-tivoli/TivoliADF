@@ -265,6 +265,10 @@
 				"scale": 5
 			},
 			{
+				"name": "updzdatetime",
+				"type": "char"
+			},
+			{
 				"name": "LastModifiedDateTime",
 				"type": "datetime2",
 				"scale": 7
