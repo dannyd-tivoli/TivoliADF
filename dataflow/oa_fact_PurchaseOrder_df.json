@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Reception_db",
+						"referenceName": "TivoliDW_db",
 						"type": "DatasetReference"
 					},
 					"name": "podetail"
