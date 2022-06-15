@@ -611,7 +611,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Reception_db",
+								"referenceName": "TivoliDW_db",
 								"type": "DatasetReference"
 							},
 							"name": "nltrans"
@@ -702,7 +702,6 @@
 						"     LastRunDate as string (\"2022-05-09 00:00:00\")",
 						"}",
 						"source(output(",
-						"          ID as integer,",
 						"          unqkey as string,",
 						"          {doc-id} as string,",
 						"          docdate as date,",
@@ -735,8 +734,7 @@
 						"          qunit as string,",
 						"          upuser as string,",
 						"          upddate as date,",
-						"          updtime as integer,",
-						"          UpdatedDateTime as timestamp",
+						"          updtime as integer",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -973,7 +971,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Reception_db",
+								"referenceName": "TivoliDW_db",
 								"type": "DatasetReference"
 							},
 							"name": "pctrans"
@@ -1064,7 +1062,6 @@
 						"     LastRunDate as string (\"2022-05-09 00:00:00\")",
 						"}",
 						"source(output(",
-						"          ID as integer,",
 						"          {doc-id} as string,",
 						"          docnumber as integer,",
 						"          line_no as integer,",
