@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "Reception_db",
+						"referenceName": "TivoliDW_db",
 						"type": "DatasetReference"
 					},
 					"name": "pctrans"
@@ -100,7 +100,6 @@
 				"     LastRunDate as string (\"2022-05-09 00:00:00\")",
 				"}",
 				"source(output(",
-				"          ID as integer,",
 				"          {doc-id} as string,",
 				"          docnumber as integer,",
 				"          line_no as integer,",
