@@ -15322,7 +15322,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Reception_db",
+								"referenceName": "TivoliDW_db",
 								"type": "DatasetReference"
 							},
 							"name": "podetail"
@@ -15719,7 +15719,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Reception_db')]",
 				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
 				"[concat(variables('factoryId'), '/datasets/FactPO')]"
 			]
