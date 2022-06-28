@@ -5541,6 +5541,33 @@
 							"referenceName": "TiviliDW_db",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "PoTrans Summary",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "UpdateLastRunDate_PO",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "DW.sp_FactPoTransactionSummary"
+						},
+						"linkedServiceName": {
+							"referenceName": "TiviliDW_db",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -13824,6 +13851,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Clean Up Onboarding",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -13845,7 +13879,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Import_CascadeToAZ_EmployeeData')]"
+				"[concat(variables('factoryId'), '/pipelines/Import_CascadeToAZ_EmployeeData')]",
+				"[concat(variables('factoryId'), '/pipelines/Clean Up Onboarding')]"
 			]
 		},
 		{
@@ -15721,6 +15756,46 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/TivoliDW_db')]",
 				"[concat(variables('factoryId'), '/datasets/FactPO')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Clean Up Onboarding')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "USP_CleanUp_Onboarding",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[Onboarding].[USP_CleanUp_Onboarding]"
+						},
+						"linkedServiceName": {
+							"referenceName": "Applications2_db",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Clean Up"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Applications2_db')]"
 			]
 		}
 	]
