@@ -9,6 +9,12 @@
 					"referenceName": "Import_CascadeToAZ_EmployeeData",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Clean Up Onboarding",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
