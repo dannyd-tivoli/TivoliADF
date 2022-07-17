@@ -405,7 +405,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "Applications2_db",
+					"referenceName": "TiviliDW_db",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -437,11 +437,17 @@
 					},
 					{
 						"name": "Status",
-						"type": "varchar"
+						"type": "nvarchar"
 					},
 					{
 						"name": "ManagerEmail",
 						"type": "nvarchar"
+					},
+					{
+						"name": "ManagerQuoteLimit",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
 					}
 				],
 				"typeProperties": {
